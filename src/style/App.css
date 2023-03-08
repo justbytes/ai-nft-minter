@@ -40,7 +40,17 @@ nav {
 }
 
 .image {
-  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 90%;
+  width: 512px;
+  height: 512px;
+  margin: 0 25px;
+  border-radius: 4px;
+}
+
+.image img {
   width: 512px;
   height: 512px;
   border: blue solid;
