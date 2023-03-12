@@ -9,4 +9,7 @@ module.exports = {
       accounts: [process.env.GOERLI_WALLET_KEY],
     },
   },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API,
+  },
 };

@@ -1,36 +1,54 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { NFTStorage } from "nft.storage";
+
+import { Buffer } from "buffer";
 
 //Import react components
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+
 //Import navbar
 import Navbar from "./components/Navbar";
 
 //Import styling
 import "./style/App.css";
+
+//Import api key
 require("dotenv").config();
 
 function App() {
   const [account, setAccount] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-
   const [image, setImage] = useState(null);
+  const [url, setURL] = useState(null);
+  const [imageData, setImageData] = useState(null);
 
   console.log(name, description);
 
-  const generateImage = (e) => {
+  const generateImage = async (e) => {
     e.preventDefault();
 
     if (name === "" || description === "") {
       window.alert("Please provide a name and description");
       return;
     }
-    createImage();
+    setImageData(createImage());
   };
 
-  const createImage = async () => {
+  const manageImage = async (e) => {
+    e.preventDefault();
+
+    if (image === null) {
+      window.alert("Generate an image before minting");
+      return;
+    }
+    console.log("loading manage image");
+    uploadImage();
+  };
+
+  async function createImage() {
     console.log("generating...");
     const URL = `https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2`;
 
@@ -64,8 +82,29 @@ function App() {
     setImage(img);
 
     return data;
-    console.log(data);
-  };
+  }
+
+  async function uploadImage() {
+    console.log("loading");
+
+    const nftStorage = new NFTStorage({
+      token: process.env.REACT_APP_NFTSTORAGE,
+    });
+
+    const { ipnft } = await nftStorage.store({
+      image: new File([generateImage.imageData], "image.jpeg", {
+        type: "image/jpeg",
+      }),
+      name: name,
+      description: description,
+    });
+
+    const url = `https://ipfs.io/ipfs/${ipnft}/metadata.json`;
+    setURL(url);
+    console.log(url);
+
+    return url;
+  }
 
   return (
     <>
@@ -102,7 +141,12 @@ function App() {
           >
             Generate Image
           </Button>
-          <Button variant="primary" className="btn mint-btn" type="submit">
+          <Button
+            variant="primary"
+            className="btn mint-btn"
+            onClick={(e) => manageImage(e)}
+            type="submit"
+          >
             Mint NFT
           </Button>
         </Form>
