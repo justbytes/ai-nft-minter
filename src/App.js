@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { ethers } from "ethers";
 import axios from "axios";
 import { NFTStorage } from "nft.storage";
-
 import { Buffer } from "buffer";
+
+import ABI from "./abi/NFT.json";
 
 //Import react components
 import Button from "react-bootstrap/Button";
@@ -18,14 +20,38 @@ import "./style/App.css";
 require("dotenv").config();
 
 function App() {
+  const [provider, setProvider] = useState("");
+  const [signer, setSigner] = useState("");
   const [account, setAccount] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [url, setURL] = useState(null);
   const [imageData, setImageData] = useState(null);
+  const [nft, setNFT] = useState(null);
 
   console.log(name, description);
+
+  const loadBlockchainData = async () => {
+    if (typeof window.ethereum !== "undefined") {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      setProvider(provider);
+      setSigner(signer);
+
+      const network = await provider.getNetwork();
+
+      const nft = new ethers.Contract(
+        "0x5a5fe2dda9a68aec28f4204ade54f245106d0e11",
+        ABI,
+        signer
+      );
+      setNFT(nft);
+
+      const accounts = await provider.listAccounts();
+      setAccount(accounts[0]);
+    }
+  };
 
   const generateImage = async (e) => {
     e.preventDefault();
@@ -48,7 +74,7 @@ function App() {
     uploadImage();
   };
 
-  async function createImage() {
+  const createImage = async () => {
     console.log("generating...");
     const URL = `https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2`;
 
@@ -80,11 +106,11 @@ function App() {
     const base64data = Buffer.from(data).toString("base64");
     const img = `data:${type};base64,` + base64data; // <-- This is so we can render it on the page
     setImage(img);
-
+    console.log(data);
     return data;
-  }
+  };
 
-  async function uploadImage() {
+  const uploadImage = async () => {
     console.log("loading");
 
     const nftStorage = new NFTStorage({
@@ -98,13 +124,23 @@ function App() {
       name: name,
       description: description,
     });
-
+    console.log(ipnft);
     const url = `https://ipfs.io/ipfs/${ipnft}/metadata.json`;
     setURL(url);
-    console.log(url);
+    mintImage(url);
+  };
 
-    return url;
-  }
+  const mintImage = async (url) => {
+    console.log(url);
+    // const signer = await provider.getSigner();
+    // const nftWithSigner = nft.connect(signer);
+    // const tx = await nftWithSigner.mint(url);
+    // await tx.wait();
+  };
+
+  useEffect(() => {
+    loadBlockchainData();
+  }, []);
 
   return (
     <>
