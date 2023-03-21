@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
 import { NFTStorage } from "nft.storage";
+import pinataSDK from "@pinata/sdk";
 import { Buffer } from "buffer";
 
 import ABI from "./abi/NFT.json";
@@ -50,6 +51,8 @@ function App() {
 
       const accounts = await provider.listAccounts();
       setAccount(accounts[0]);
+    } else {
+      window.alert("Please connect Metamask wallet");
     }
   };
 
@@ -106,36 +109,39 @@ function App() {
     const base64data = Buffer.from(data).toString("base64");
     const img = `data:${type};base64,` + base64data; // <-- This is so we can render it on the page
     setImage(img);
-    console.log(data);
-    return data;
   };
 
   const uploadImage = async () => {
-    console.log("loading");
-
-    const nftStorage = new NFTStorage({
+    console.log("loading...");
+    // Create instance to NFT.Storage
+    const nftstorage = new NFTStorage({
       token: process.env.REACT_APP_NFTSTORAGE,
     });
 
-    const { ipnft } = await nftStorage.store({
-      image: new File([generateImage.imageData], "image.jpeg", {
-        type: "image/jpeg",
-      }),
+    const blob = await (await fetch(image)).blob();
+    const imageHash = await nftstorage.storeBlob(blob);
+    console.log("Image Hash:", blob);
+
+    const { ipnft } = await nftstorage.store({
+      image: blob,
       name: name,
       description: description,
     });
-    console.log(ipnft);
+
+    // Save the URL
     const url = `https://ipfs.io/ipfs/${ipnft}/metadata.json`;
     setURL(url);
+    console.log(url);
+
     mintImage(url);
   };
 
-  const mintImage = async (url) => {
-    console.log(url);
-    // const signer = await provider.getSigner();
-    // const nftWithSigner = nft.connect(signer);
-    // const tx = await nftWithSigner.mint(url);
-    // await tx.wait();
+  const mintImage = async (metadata) => {
+    console.log(metadata);
+    const signer = await provider.getSigner();
+    const nftWithSigner = nft.connect(signer);
+    const tx = await nftWithSigner.mint(url);
+    await tx.wait();
   };
 
   useEffect(() => {
