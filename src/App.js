@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
 import { NFTStorage } from "nft.storage";
-import pinataSDK from "@pinata/sdk";
 import { Buffer } from "buffer";
 
 import ABI from "./abi/NFT.json";
@@ -26,9 +25,8 @@ function App() {
   const [account, setAccount] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
-  const [url, setURL] = useState(null);
-  const [imageData, setImageData] = useState(null);
+  const [image, setImage] = useState("");
+  const [url, setURL] = useState("");
   const [nft, setNFT] = useState(null);
 
   console.log(name, description);
@@ -63,7 +61,7 @@ function App() {
       window.alert("Please provide a name and description");
       return;
     }
-    setImageData(createImage());
+    createImage();
   };
 
   const manageImage = async (e) => {
@@ -93,11 +91,29 @@ function App() {
       data: JSON.stringify({
         inputs: description,
         options: {
+          negative_prompt: [
+            "lowers",
+            "error",
+            "cropped",
+            "worst quality",
+            "low quality",
+            "jpeg artifacts",
+            "out of frame",
+            "watermark",
+            "signature",
+            "photorealistic",
+            "deformed",
+            "ugly",
+            "mutilated",
+            "disfigured",
+            "bad proportions",
+            "mutated hands",
+            "poorly drawn face",
+          ],
           wait_for_model: true,
-          height: 480,
-          width: 480,
-          num_inference_steps: 200,
-          guidance_scale: 5,
+          num_inference_steps: 25,
+          guidance_scale: 12,
+          manual_seed: 2,
         },
       }),
       responseType: "arraybuffer",
@@ -108,7 +124,7 @@ function App() {
 
     const base64data = Buffer.from(data).toString("base64");
     const img = `data:${type};base64,` + base64data; // <-- This is so we can render it on the page
-    setImage(img);
+    await setImage(img);
   };
 
   const uploadImage = async () => {
@@ -136,8 +152,8 @@ function App() {
     mintImage(url);
   };
 
-  const mintImage = async (metadata) => {
-    console.log(metadata);
+  const mintImage = async (url) => {
+    console.log(url);
     const signer = await provider.getSigner();
     const nftWithSigner = nft.connect(signer);
     const tx = await nftWithSigner.mint(url);
