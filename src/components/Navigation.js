@@ -29,33 +29,28 @@ export function Navigation({ account, setAccount }) {
   return (
     <Navbar className="navbar-container" expand="lg">
       <Container fluid>
-        <Navbar.Brand className="brand-name" href="#/homePage">
-          NFT Genie
-        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto navbar justify-content-start">
             <Nav.Link href="#/home">Home</Nav.Link>
             <NavDropdown
               className="nav-dropdown"
-              title="Backend Projects"
+              title="Resources"
               id="basic-nav-dropdown"
               show={showDropdown}
               onMouseEnter={handleDropdownMouseEnter}
               onMouseLeave={handleDropdownLeave}
             >
-              <NavDropdown.Item>Something</NavDropdown.Item>
+              <NavDropdown.Item>Set up a MetaMask Wallet</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>Something</NavDropdown.Item>
+              <NavDropdown.Item>Prompt like a pro!</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>Something</NavDropdown.Item>
+              <NavDropdown.Item>What's an NFT?</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>Something</NavDropdown.Item>
+              <NavDropdown.Item>View Contract</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Nav className="ml-auto">
-            <Nav.Link href="#/humanNFT">Human NFT</Nav.Link>
-            <Nav.Link href="#/aiNFT">AI NFT</Nav.Link>
             {account ? (
               <button type="button" className="connect-wallet">
                 {account.slice(0, 6) + "..." + account.slice(38, 42)}

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { ethers } from "ethers";
+import React, { useState } from "react";
+
 import axios from "axios";
 import { NFTStorage } from "nft.storage";
 import { Buffer } from "buffer";
@@ -9,47 +9,17 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 
-//Import contract ABI
-import ABI from "../../abi/NFT.json";
-
 //Import api key
 require("dotenv").config();
 
-export function AiNFT() {
-  const [provider, setProvider] = useState("");
-  const [signer, setSigner] = useState("");
-  const [account, setAccount] = useState("");
+export function AiNFT({ signer, provider, nft }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [url, setURL] = useState("");
-  const [nft, setNFT] = useState(null);
+  const [url, setURL] = useState(null);
   const [isWaiting, setIsWaiting] = useState(false);
   const [message, setMessage] = useState("");
   const [viewMetadata, setViewMetadata] = useState(false);
-
-  const loadBlockchainData = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      setProvider(provider);
-      setSigner(signer);
-
-      const network = await provider.getNetwork();
-
-      const nft = new ethers.Contract(
-        "0x5a5fe2dda9a68aec28f4204ade54f245106d0e11",
-        ABI,
-        signer
-      );
-      setNFT(nft);
-
-      const accounts = await provider.listAccounts();
-      setAccount(accounts[0]);
-    } else {
-      window.alert("Please connect Metamask wallet");
-    }
-  };
 
   const generateImage = async (e) => {
     e.preventDefault();
@@ -91,6 +61,14 @@ export function AiNFT() {
         inputs: description,
         options: {
           negative_prompt: [
+            "Blurred",
+            "Overexposed",
+            "Underexposed",
+            "Low contrast",
+            "Noisy",
+            "Unnatural colors",
+            "Unbalanced composition",
+            "Off-topic",
             "lowers",
             "error",
             "cropped",
@@ -111,7 +89,7 @@ export function AiNFT() {
           ],
           wait_for_model: true,
           num_inference_steps: 25,
-          guidance_scale: 12,
+          guidance_scale: 10,
           manual_seed: 2,
         },
       }),
@@ -161,10 +139,6 @@ export function AiNFT() {
     const tx = await nftWithSigner.mint(url);
     await tx.wait();
   };
-
-  useEffect(() => {
-    loadBlockchainData();
-  }, []);
 
   return (
     <>
