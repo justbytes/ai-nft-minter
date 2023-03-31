@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
 //Import pages
 import { Navigation } from "./components/Navigation";
+import { Footer } from "./components/Footer";
 import { Home } from "./components/pages/Home";
 import { AiNFT } from "./components/pages/AiNFT";
 
@@ -55,6 +56,7 @@ function App() {
           element={<AiNFT signer={signer} provider={provider} nft={nft} />}
         />
       </Routes>
+      <Footer />
     </Router>
   );
 }

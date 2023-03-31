@@ -9,14 +9,21 @@ export function Home() {
   return (
     <>
       <div className="background">
-        <h1>NFT Genie</h1>
+        <h1>Welcome to NFT Genie</h1>
         <Card text="dark" className="mb-2 homeCard">
           <Card.Body>
-            <Card.Title>Welcome </Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
+            <h3>How it works</h3>
+            <p>
+              Welcome to NFT Genie, where you can unleash your creativity and
+              bring your digital creations to life in just minutes! With our
+              user-friendly Stable Diffusion text-to-image generator, you can
+              easily generate stunning visuals by simply typing in a prompt.
+              Once you find the perfect image, simply click the 'Mint NFT'
+              button to upload it to IPFS, pay the gas fee, and voila! You've
+              just created your very own unique NFT. And the best part? You can
+              show off your masterpiece on Open Sea and potentially earn some
+              cash.
+            </p>
           </Card.Body>
         </Card>
       </div>
@@ -37,11 +44,25 @@ export function Home() {
         <div className="project">
           <Card text="dark" className="mb-2 projectCard">
             <Card.Body>
-              <Card.Title>Are you ready? </Card.Title>
+              <Card.Title>
+                <h3>Are you ready?</h3>
+              </Card.Title>
               <Card.Text>
-                If you have a Metamask Wallet ready then lets make some NFT's
-                <Button href="#/aiNFT">Lets Go!</Button>
+                To use NFT Genie you will need to have the MetaMask extension
+                installed. Please follow this{" "}
+                <a href="https://medium.com/bankless-dao/how-to-set-up-a-metamask-wallet-a2cc255bafe2">
+                  guide
+                </a>{" "}
+                if you need help setting up your MetaMask Wallet.
+                <br />
+                <br />
+                Please read the conditions of use from Stable Diffusion{" "}
+                <a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">
+                  here
+                </a>{" "}
+                before using NFT Genie.
               </Card.Text>
+              <Button href="#/aiNFT">Lets Go!</Button>
             </Card.Body>
           </Card>
         </div>

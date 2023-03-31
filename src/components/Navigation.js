@@ -29,43 +29,50 @@ export function Navigation({ account, setAccount }) {
   return (
     <Navbar className="navbar-container" expand="lg">
       <Container fluid>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto navbar justify-content-start">
-            <Nav.Link href="#/home">Home</Nav.Link>
-            <NavDropdown
-              className="nav-dropdown"
-              title="Resources"
-              id="basic-nav-dropdown"
-              show={showDropdown}
-              onMouseEnter={handleDropdownMouseEnter}
-              onMouseLeave={handleDropdownLeave}
+        <Navbar.Brand className="brand-name" href="#/home">
+          NFT Genie
+        </Navbar.Brand>
+
+        <Nav className="me-auto navbar justify-content-start">
+          <Nav.Link href="#/aiNFT">Make a NFT</Nav.Link>
+          <NavDropdown
+            className="nav-dropdown"
+            title="Resources"
+            id="basic-nav-dropdown"
+            show={showDropdown}
+            onMouseEnter={handleDropdownMouseEnter}
+            onMouseLeave={handleDropdownLeave}
+          >
+            <NavDropdown.Item href="https://medium.com/bankless-dao/how-to-set-up-a-metamask-wallet-a2cc255bafe2">
+              MetaMask Wallet Guide
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="https://stable-diffusion-art.com/prompt-guide/">
+              Prompt Guide
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="https://opensea.io/">
+              View collection on OpenSea
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item>View Contract</NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+        <Nav className="ml-auto">
+          {account ? (
+            <button type="button" className="connect-wallet">
+              {account.slice(0, 6) + "..." + account.slice(38, 42)}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="connect-wallet"
+              onClick={connectHandler}
             >
-              <NavDropdown.Item>Set up a MetaMask Wallet</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>Prompt like a pro!</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>What's an NFT?</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>View Contract</NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-          <Nav className="ml-auto">
-            {account ? (
-              <button type="button" className="connect-wallet">
-                {account.slice(0, 6) + "..." + account.slice(38, 42)}
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="connect-wallet"
-                onClick={connectHandler}
-              >
-                Connect
-              </button>
-            )}
-          </Nav>
-        </Navbar.Collapse>
+              Connect
+            </button>
+          )}
+        </Nav>
       </Container>
     </Navbar>
   );
