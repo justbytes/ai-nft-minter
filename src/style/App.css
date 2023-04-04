@@ -152,13 +152,15 @@ nav {
 
 /* Footer.js styling */
 footer {
+  margin-top: 40px;
   background-color: #000000;
   box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.139),
     0 0 10px rgba(94, 17, 210, 0.477);
-  height: 7rem;
+  height: 9rem;
   text-align: center;
   padding: 40px;
   position: relative;
+  bottom: 0;
   left: 0;
 }
 footer a {
