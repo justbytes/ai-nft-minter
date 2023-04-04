@@ -10,7 +10,7 @@ export function Home() {
     <>
       <div className="background">
         <h1>Welcome to NFT Genie</h1>
-        <Card text="dark" className="mb-2 homeCard">
+        <Card className="mb-2 homeCard">
           <Card.Body>
             <h3>How it works</h3>
             <p>
@@ -42,7 +42,7 @@ export function Home() {
           </Figure>
         </div>
         <div className="project">
-          <Card text="dark" className="mb-2 projectCard">
+          <Card className="mb-2 projectCard">
             <Card.Body>
               <Card.Title>
                 <h3>Are you ready?</h3>

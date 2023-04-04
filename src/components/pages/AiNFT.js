@@ -8,11 +8,14 @@ import { Buffer } from "buffer";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
+import Row from "react-bootstrap/Row";
+import { Container } from "react-bootstrap";
 
 //Import api key
 require("dotenv").config();
 
 export function AiNFT({ signer, provider, nft }) {
+  const [prompt, setPrompt] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -24,23 +27,22 @@ export function AiNFT({ signer, provider, nft }) {
   const generateImage = async (e) => {
     e.preventDefault();
 
-    if (name === "" || description === "") {
-      window.alert("Please provide a name and description");
+    if (prompt === "") {
+      window.alert("Please provide a prompt");
       return;
     }
     createImage();
     setIsWaiting(true);
-    setMessage("Generating image please wait...");
+    setMessage("Generating image. This can take a minute...");
   };
 
   const manageImage = async (e) => {
     e.preventDefault();
 
-    if (image === null) {
+    if (image === null || image === "") {
       window.alert("Generate an image before minting");
       return;
     }
-    console.log("loading manage image");
     uploadImage();
   };
 
@@ -58,7 +60,7 @@ export function AiNFT({ signer, provider, nft }) {
         "Content-Type": "application/json",
       },
       data: JSON.stringify({
-        inputs: description,
+        inputs: prompt,
         options: {
           negative_prompt: [
             "Blurred",
@@ -116,9 +118,15 @@ export function AiNFT({ signer, provider, nft }) {
     console.log("Image Hash:", blob);
 
     const { ipnft } = await nftstorage.store({
-      image: blob,
       name: name,
       description: description,
+      image: blob,
+      // attributes: [
+      //   {
+      //     trait_type: traitTypeOne,
+      //     value: valueOne,
+      //   },
+      // ],
     });
 
     // Save the URL
@@ -140,69 +148,98 @@ export function AiNFT({ signer, provider, nft }) {
 
   return (
     <>
-      <div className="nft-wrapper">
-        <Form className="generate-image">
-          <Form.Group className="mb-2" controlId="formBasicNFTName">
-            <Form.Control
-              type="input"
-              placeholder="NFT Name"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-            <Form.Text className="text-muted">Give your NFT a name.</Form.Text>
-          </Form.Group>
-          <Form.Group className="mb-2" controlId="formBasicDescription">
-            <Form.Control
-              type="input"
-              placeholder="NFT Description"
-              onChange={(e) => {
-                setDescription(e.target.value);
-              }}
-            />
-            <Form.Text className="text-muted">
-              Enter a description for the AI NFT generator
-            </Form.Text>
-          </Form.Group>
-          <Button
-            variant="primary"
-            className="btn generate-btn"
-            onClick={(e) => generateImage(e)}
-            type="submit"
-          >
-            Generate Image
-          </Button>
-          <Button
-            variant="primary"
-            className="btn mint-btn"
-            onClick={(e) => manageImage(e)}
-            type="submit"
-          >
-            Mint NFT
-          </Button>
-        </Form>
-        <div className="image">
-          {!isWaiting && image ? (
-            <img src={image} alt="AI Generated Image" />
-          ) : isWaiting ? (
-            <div className="image-placeholder">
-              <Spinner animation="border" />
-              <p>{message}</p>
-            </div>
+      <Container>
+        <div className="form-wrapper">
+          <Form className="prompt-form">
+            <Form.Label>
+              <h1>Enter A Prompt</h1>
+            </Form.Label>
+            <Form.Group className="mb-3">
+              <Form.Control
+                as="textarea"
+                rows={3}
+                onChange={(e) => {
+                  setPrompt(e.target.value);
+                }}
+              />
+              <Form.Text className="text-muted">
+                What makes a good{" "}
+                <a href="https://stable-diffusion-art.com/prompt-guide/">
+                  Prompt
+                </a>
+                ?
+              </Form.Text>
+            </Form.Group>
+          </Form>
+          <Form className="metadata-form">
+            <Form.Label>
+              <h1>Enter NFT Details</h1>
+            </Form.Label>
+            <Form.Group className="mb-2" controlId="formBasicNFTName">
+              <Form.Control
+                type="input"
+                placeholder="NFT Name"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+              <Form.Text className="text-muted">The</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-2" controlId="formBasicDescription">
+              <Form.Control
+                as="textarea"
+                rows={2}
+                placeholder="NFT Description"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+              <Form.Text className="text-muted">
+                Enter a description, mission, story, or message about your NFT.
+              </Form.Text>
+            </Form.Group>
+            <Row className="generate-buttons">
+              <Button
+                variant="primary"
+                className="btn generate-btn"
+                onClick={(e) => generateImage(e)}
+                type="submit"
+              >
+                Generate Image
+              </Button>
+              <Button
+                variant="primary"
+                className="btn mint-btn"
+                onClick={(e) => manageImage(e)}
+                type="submit"
+              >
+                Mint NFT
+              </Button>
+            </Row>
+          </Form>
+        </div>
+        <div className="image-wrapper">
+          <div className="image">
+            {!isWaiting && image ? (
+              <img src={image} alt="AI Generated Image" />
+            ) : isWaiting ? (
+              <div className="image-placeholder">
+                <Spinner animation="border" />
+                <p>{message}</p>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          {viewMetadata && url ? (
+            <p>
+              View <a href={url}>Metadata</a>
+            </p>
           ) : (
-            <></>
+            <p>Metadata will be displayed here after creating a NFT!</p>
           )}
         </div>
-      </div>
-      <div>
-        {viewMetadata && url ? (
-          <p>
-            View <a href={url}>Metadata</a>
-          </p>
-        ) : (
-          <></>
-        )}
-      </div>
+      </Container>
     </>
   );
 }
