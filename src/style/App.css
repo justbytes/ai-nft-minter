@@ -101,7 +101,6 @@ nav {
 /* AiNFT.js Styling */
 .container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -112,13 +111,11 @@ nav {
   border-radius: 10px;
   width: 55%;
   margin: 5% 2%;
-  justify-content: center;
 }
 
 .prompt-form,
 .metadata-form {
-  padding: 20px;
-  width: 100%;
+  padding: 10px;
 }
 
 .generate-btn,
@@ -136,17 +133,17 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 90%;
-  width: 520px;
-  height: 520px;
+
+  width: 786px;
+  height: 786px;
   margin-top: 15%;
   border-radius: 4px;
   border: red solid;
 }
 
 .image img {
-  width: 514px;
-  height: 514px;
+  width: 786px;
+  height: 786px;
 }
 /* End of AiNFT.js styling */
 

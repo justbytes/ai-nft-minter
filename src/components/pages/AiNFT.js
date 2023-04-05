@@ -15,6 +15,7 @@ import { Container } from "react-bootstrap";
 require("dotenv").config();
 
 export function AiNFT({ signer, provider, nft }) {
+  //Set State variables
   const [prompt, setPrompt] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -23,6 +24,19 @@ export function AiNFT({ signer, provider, nft }) {
   const [isWaiting, setIsWaiting] = useState(false);
   const [message, setMessage] = useState("");
   const [viewMetadata, setViewMetadata] = useState(false);
+  //State attribute variables for nft metadata
+  const [trait0, setTrait0] = useState(null);
+  const [value0, setValue0] = useState(null);
+  const [trait1, setTrait1] = useState(null);
+  const [value1, setValue1] = useState(null);
+  const [trait2, setTrait2] = useState(null);
+  const [value2, setValue2] = useState(null);
+  const [trait3, setTrait3] = useState(null);
+  const [value3, setValue3] = useState(null);
+  const [trait4, setTrait4] = useState(null);
+  const [value4, setValue4] = useState(null);
+  const [trait5, setTrait5] = useState(null);
+  const [value5, setValue5] = useState(null);
 
   const generateImage = async (e) => {
     e.preventDefault();
@@ -121,12 +135,32 @@ export function AiNFT({ signer, provider, nft }) {
       name: name,
       description: description,
       image: blob,
-      // attributes: [
-      //   {
-      //     trait_type: traitTypeOne,
-      //     value: valueOne,
-      //   },
-      // ],
+      attributes: [
+        {
+          trait_type: trait0,
+          value: value0,
+        },
+        {
+          trait_type: trait1,
+          value: value1,
+        },
+        {
+          trait_type: trait2,
+          value: value2,
+        },
+        {
+          trait_type: trait3,
+          value: value3,
+        },
+        {
+          trait_type: trait4,
+          value: value4,
+        },
+        {
+          trait_type: trait5,
+          value: value5,
+        },
+      ],
     });
 
     // Save the URL
@@ -176,6 +210,14 @@ export function AiNFT({ signer, provider, nft }) {
               <h1>Enter NFT Details</h1>
             </Form.Label>
             <Form.Group className="mb-2" controlId="formBasicNFTName">
+              <Form.Text className="text-muted">
+                List your Trait Type and description of that attribute. You must
+                come up with all nine attributes! Read{" "}
+                <a href="https://docs.opensea.io/docs/metadata-standards">
+                  here
+                </a>
+                for more information about .
+              </Form.Text>
               <Form.Control
                 type="input"
                 placeholder="NFT Name"
@@ -183,7 +225,9 @@ export function AiNFT({ signer, provider, nft }) {
                   setName(e.target.value);
                 }}
               />
-              <Form.Text className="text-muted">The</Form.Text>
+              <Form.Text className="text-muted">
+                Give your NFT a name.
+              </Form.Text>
             </Form.Group>
             <Form.Group className="mb-2" controlId="formBasicDescription">
               <Form.Control
@@ -198,6 +242,102 @@ export function AiNFT({ signer, provider, nft }) {
                 Enter a description, mission, story, or message about your NFT.
               </Form.Text>
             </Form.Group>
+            <Row className="att0">
+              <Form.Control
+                type="input"
+                placeholder="Trait Type"
+                onChange={(e) => {
+                  setTrait0(e.target.value);
+                }}
+              />
+              <Form.Control
+                type="input"
+                placeholder="Value"
+                onChange={(e) => {
+                  setValue0(e.target.value);
+                }}
+              />
+            </Row>
+            <Row className="att1">
+              <Form.Control
+                type="input"
+                placeholder="Trait Type"
+                onChange={(e) => {
+                  setTrait1(e.target.value);
+                }}
+              />
+              <Form.Control
+                type="input"
+                placeholder="Value"
+                onChange={(e) => {
+                  setValue1(e.target.value);
+                }}
+              />
+            </Row>
+            <Row className="att2">
+              <Form.Control
+                type="input"
+                placeholder="Trait Type"
+                onChange={(e) => {
+                  setTrait2(e.target.value);
+                }}
+              />
+              <Form.Control
+                type="input"
+                placeholder="Value"
+                onChange={(e) => {
+                  setValue2(e.target.value);
+                }}
+              />
+            </Row>
+            <Row className="att3">
+              <Form.Control
+                type="input"
+                placeholder="Trait Type"
+                onChange={(e) => {
+                  setTrait3(e.target.value);
+                }}
+              />
+              <Form.Control
+                type="input"
+                placeholder="Value"
+                onChange={(e) => {
+                  setValue3(e.target.value);
+                }}
+              />
+            </Row>
+            <Row className="att4">
+              <Form.Control
+                type="input"
+                placeholder="Trait Type"
+                onChange={(e) => {
+                  setTrait4(e.target.value);
+                }}
+              />
+              <Form.Control
+                type="input"
+                placeholder="Value"
+                onChange={(e) => {
+                  setValue4(e.target.value);
+                }}
+              />
+            </Row>
+            <Row className="att5">
+              <Form.Control
+                type="input"
+                placeholder="Trait Type"
+                onChange={(e) => {
+                  setTrait5(e.target.value);
+                }}
+              />
+              <Form.Control
+                type="input"
+                placeholder="Value"
+                onChange={(e) => {
+                  setValue5(e.target.value);
+                }}
+              />
+            </Row>
             <Row className="generate-buttons">
               <Button
                 variant="primary"
