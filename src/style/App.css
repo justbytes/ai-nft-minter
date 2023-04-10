@@ -1,3 +1,11 @@
+:root {
+  --honeydew: #edffec;
+  --light-green: #61e786;
+  --gray: #5a5766;
+  --english-violet: #48435c;
+  --tropical-indigo: #9792e3;
+}
+
 body {
   font-family: "Share Tech", sans-serif;
   font-size: 18px;
@@ -111,39 +119,61 @@ nav {
   border-radius: 10px;
   width: 55%;
   margin: 5% 2%;
+  padding: 10px;
 }
 
 .prompt-form,
 .metadata-form {
   padding: 10px;
+  background-color: rgba(48, 149, 129, 0.278);
+  width: 95%;
+  margin: 5px auto;
+  border-radius: 5px;
 }
 
-.generate-btn,
-.mint-btn {
-  width: 47%;
-  margin: 10px;
+.att {
+  width: 99%;
+  margin: auto 3px;
+  padding: 5px;
 }
 
-.generate-buttons.row {
+input.form-control {
+  margin: 2px auto;
+}
+
+.generate-btn {
   width: 100%;
-  margin: auto;
 }
 
-.image {
+.mint-btn {
+  width: 99%;
+  margin: auto 5px;
+}
+
+.image-wrapper {
+  background-color: #000000;
+  box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.166),
+    0 0 25px rgba(94, 17, 210, 0.477), 0 0 1px 1px rgb(14, 14, 14);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5% 0 0 0;
+  height: 40%;
+  width: 50%;
+}
+
+.generated-image {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  width: 786px;
-  height: 786px;
-  margin-top: 15%;
-  border-radius: 4px;
+  width: 600px;
+  height: 600px;
+  border-radius: 5px;
   border: red solid;
 }
 
-.image img {
-  width: 786px;
-  height: 786px;
+.generated-image img {
+  width: 600px;
+  height: 600px;
 }
 /* End of AiNFT.js styling */
 

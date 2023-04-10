@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Row from "react-bootstrap/Row";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 //Import api key
 require("dotenv").config();
@@ -76,32 +76,32 @@ export function AiNFT({ signer, provider, nft }) {
       data: JSON.stringify({
         inputs: prompt,
         options: {
-          negative_prompt: [
-            "Blurred",
-            "Overexposed",
-            "Underexposed",
-            "Low contrast",
-            "Noisy",
-            "Unnatural colors",
-            "Unbalanced composition",
-            "Off-topic",
-            "lowers",
-            "error",
-            "cropped",
-            "worst quality",
-            "low quality",
-            "jpeg artifacts",
-            "out of frame",
-            "watermark",
-            "signature",
-            "deformed",
-            "ugly",
-            "mutilated",
-            "disfigured",
-            "bad proportions",
-            "mutated hands",
-            "poorly drawn face",
-          ],
+          // negative_prompt: [
+          //   "Blurred",
+          //   "Overexposed",
+          //   "Underexposed",
+          //   "Low contrast",
+          //   "Noisy",
+          //   "Unnatural colors",
+          //   "Unbalanced composition",
+          //   "Off-topic",
+          //   "lowers",
+          //   "error",
+          //   "cropped",
+          //   "worst quality",
+          //   "low quality",
+          //   "jpeg artifacts",
+          //   "out of frame",
+          //   "watermark",
+          //   "signature",
+          //   "deformed",
+          //   "ugly",
+          //   "mutilated",
+          //   "disfigured",
+          //   "bad proportions",
+          //   "mutated hands",
+          //   "poorly drawn face",
+          // ],
           wait_for_model: true,
           num_inference_steps: 25,
           guidance_scale: 12,
@@ -204,6 +204,14 @@ export function AiNFT({ signer, provider, nft }) {
                 ?
               </Form.Text>
             </Form.Group>
+            <Button
+              variant="primary"
+              className="btn generate-btn"
+              onClick={(e) => generateImage(e)}
+              type="submit"
+            >
+              Generate Image
+            </Button>
           </Form>
           <Form className="metadata-form">
             <Form.Label>
@@ -242,7 +250,7 @@ export function AiNFT({ signer, provider, nft }) {
                 Enter a description, mission, story, or message about your NFT.
               </Form.Text>
             </Form.Group>
-            <Row className="att0">
+            <Row className="att mb-2">
               <Form.Control
                 type="input"
                 placeholder="Trait Type"
@@ -258,7 +266,7 @@ export function AiNFT({ signer, provider, nft }) {
                 }}
               />
             </Row>
-            <Row className="att1">
+            <Row className="att mb-2">
               <Form.Control
                 type="input"
                 placeholder="Trait Type"
@@ -274,7 +282,7 @@ export function AiNFT({ signer, provider, nft }) {
                 }}
               />
             </Row>
-            <Row className="att2">
+            <Row className="att mb-2">
               <Form.Control
                 type="input"
                 placeholder="Trait Type"
@@ -290,7 +298,7 @@ export function AiNFT({ signer, provider, nft }) {
                 }}
               />
             </Row>
-            <Row className="att3">
+            <Row className="att mb-2">
               <Form.Control
                 type="input"
                 placeholder="Trait Type"
@@ -306,7 +314,7 @@ export function AiNFT({ signer, provider, nft }) {
                 }}
               />
             </Row>
-            <Row className="att4">
+            <Row className="att mb-2">
               <Form.Control
                 type="input"
                 placeholder="Trait Type"
@@ -322,7 +330,7 @@ export function AiNFT({ signer, provider, nft }) {
                 }}
               />
             </Row>
-            <Row className="att5">
+            <Row className="att mb-2">
               <Form.Control
                 type="input"
                 placeholder="Trait Type"
@@ -338,28 +346,19 @@ export function AiNFT({ signer, provider, nft }) {
                 }}
               />
             </Row>
-            <Row className="generate-buttons">
-              <Button
-                variant="primary"
-                className="btn generate-btn"
-                onClick={(e) => generateImage(e)}
-                type="submit"
-              >
-                Generate Image
-              </Button>
-              <Button
-                variant="primary"
-                className="btn mint-btn"
-                onClick={(e) => manageImage(e)}
-                type="submit"
-              >
-                Mint NFT
-              </Button>
-            </Row>
+
+            <Button
+              variant="primary"
+              className="btn mint-btn"
+              onClick={(e) => manageImage(e)}
+              type="submit"
+            >
+              Mint NFT
+            </Button>
           </Form>
         </div>
         <div className="image-wrapper">
-          <div className="image">
+          <div className="generated-image">
             {!isWaiting && image ? (
               <img src={image} alt="AI Generated Image" />
             ) : isWaiting ? (
