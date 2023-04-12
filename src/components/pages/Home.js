@@ -8,8 +8,8 @@ import profilePic from "../../images/genie.jpeg";
 export function Home() {
   return (
     <>
+      <h1 className="mainH1">Welcome to NFT Genie</h1>
       <div className="background">
-        <h1>Welcome to NFT Genie</h1>
         <Card className="mb-2 homeCard">
           <Card.Body>
             <h3>How it works</h3>
@@ -31,12 +31,12 @@ export function Home() {
         <div className="picture">
           <Figure className="pictureFigure">
             <Figure.Image
-              width={350}
+              width={400}
               height={450}
               alt="171x180"
               src={profilePic}
             />
-            <Figure.Caption>
+            <Figure.Caption className="fig-caption">
               Unlimited prompts to make your wishes come true.
             </Figure.Caption>
           </Figure>

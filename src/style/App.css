@@ -10,21 +10,27 @@ body {
   font-family: "Share Tech", sans-serif;
   font-size: 18px;
   color: white;
-
-  background-color: #343a40;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%239C92AC' fill-opacity='0.25' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-    linear-gradient(to right top, #343a40, #2b2c31, #211f22, #151314, #000000);
+  background-color: #5a57661a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%239C92AC' fill-opacity='0.25' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  /* linear-gradient(to right top, #343a40, #2b2c31, #211f22, #, #000000); */
 }
 
 /* Navigation.js styling */
 nav {
-  background-image: linear-gradient(180deg, #582cb8 0%, #a24bb8f7 100%);
-  box-shadow: inset 0 0 50px rgb(113, 110, 118), 0 0 1px 1px rgb(8, 8, 8);
+  background-color: #000000;
+  box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.139),
+    0 0 10px rgba(94, 17, 210, 0.477);
+  color: white;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   height: 5.5rem;
   font-size: 24px;
+}
+
+.navbar-brand,
+.nav-link {
+  color: white;
 }
 
 .connect-wallet {
@@ -41,9 +47,9 @@ nav {
 /* Home.js styling */
 .background {
   width: 98%;
-  background-color: #000000;
-  box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.219),
-    0 0 25px rgba(94, 17, 210, 0.477), 0 0 1px 1px rgb(14, 14, 14);
+  background-color: #787683;
+  box-shadow: inset 5px 5px 20px 20px #61e78737, -10px 10px 15px #9792e3;
+  border: solid 1px #61e786;
   border-radius: 10px;
   height: 100%;
   padding: 10px;
@@ -51,17 +57,31 @@ nav {
   margin-top: 3%;
 }
 
+.mainH1 {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  background-color: #5a5766;
+  border-radius: 7px;
+  border: solid 1px #61e786;
+  width: 40%;
+  height: 4rem;
+  margin: 10px auto;
+  padding: 7px;
+  position: absolute;
+  right: 30%;
+}
+
 .homeCard,
 .projectCard {
-  /* background-color: rgba(198, 198, 211, 0.397); */
-  background-color: rgba(207, 189, 209, 0.275);
+  background-color: #5a576600;
+  border: none;
 }
 
 .homeCard {
-  margin: 0 auto;
-  margin-top: 1.5%;
-  height: 90%;
-  width: 98%;
+  margin: 15px auto;
+  padding: 10px;
+  width: 99%;
 }
 
 .additionals {
@@ -73,9 +93,9 @@ nav {
 }
 
 .picture {
-  background-color: #000000;
-  box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.219),
-    0 0 25px rgba(94, 17, 210, 0.477), 0 0 1px 1px rgb(14, 14, 14);
+  background-color: #787683;
+  box-shadow: inset 5px 5px 20px 20px #61e78737, -15px 15px 25px #9792e3;
+  border: solid 1px #61e786;
   width: 27rem;
   display: flex;
   justify-content: center;
@@ -83,13 +103,20 @@ nav {
 }
 
 .pictureFigure {
-  margin-top: 7%;
+  justify-content: center;
+  margin: auto;
+  padding: 15px;
+}
+
+.fig-caption {
+  color: white;
+  text-align: center;
 }
 
 .project {
-  background-color: #000000;
-  box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.219),
-    0 0 25px rgba(94, 17, 210, 0.477), 0 0 1px 1px rgb(14, 14, 14);
+  background-color: #787683;
+  box-shadow: inset 5px 5px 20px 20px #61e78737, 15px 15px 25px #9792e3,
+    0 0 0 1px #61e786;
   width: 50rem;
   border-radius: 10px;
   text-align: center;
@@ -165,10 +192,10 @@ input.form-control {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 600px;
-  height: 600px;
-  border-radius: 5px;
-  border: red solid;
+  width: 608px;
+  height: 608px;
+  border: solid var(--honeydew);
+  box-shadow: 0px 0px 5px 5px #61e78737;
 }
 
 .generated-image img {

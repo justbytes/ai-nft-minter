@@ -11,6 +11,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
+import profilePic from "../../images/genie.jpeg";
+
 //Import api key
 require("dotenv").config();
 
@@ -366,6 +368,8 @@ export function AiNFT({ signer, provider, nft }) {
                 <Spinner animation="border" />
                 <p>{message}</p>
               </div>
+            ) : !isWaiting ? (
+              <img src={profilePic} alt="NFT Genie Picture" />
             ) : (
               <></>
             )}
