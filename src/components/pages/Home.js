@@ -50,19 +50,27 @@ export function Home() {
               <Card.Text>
                 To use NFT Genie you will need to have the MetaMask extension
                 installed. Please follow this{" "}
-                <a href="https://medium.com/bankless-dao/how-to-set-up-a-metamask-wallet-a2cc255bafe2">
+                <a
+                  className="link"
+                  href="https://medium.com/bankless-dao/how-to-set-up-a-metamask-wallet-a2cc255bafe2"
+                >
                   guide
                 </a>{" "}
                 if you need help setting up your MetaMask Wallet.
                 <br />
                 <br />
                 Please read the conditions of use from Stable Diffusion{" "}
-                <a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">
+                <a
+                  className="link"
+                  href="https://huggingface.co/spaces/CompVis/stable-diffusion-license"
+                >
                   here
                 </a>{" "}
                 before using NFT Genie.
               </Card.Text>
-              <Button href="#/aiNFT">Lets Go!</Button>
+              <Button type className="project-btn" href="#/aiNFT">
+                Lets Go!
+              </Button>
             </Card.Body>
           </Card>
         </div>

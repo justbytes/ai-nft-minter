@@ -5,7 +5,6 @@
   --english-violet: #48435c;
   --tropical-indigo: #9792e3;
 }
-
 body {
   font-family: "Share Tech", sans-serif;
   font-size: 18px;
@@ -14,12 +13,16 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%239C92AC' fill-opacity='0.25' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   /* linear-gradient(to right top, #343a40, #2b2c31, #211f22, #, #000000); */
 }
+.link {
+  text-decoration: none !important;
+  color: #9792e3;
+}
 
 /* Navigation.js styling */
 nav {
   background-color: #000000;
   box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.139),
-    0 0 10px rgba(94, 17, 210, 0.477);
+    0 0 10px rgba(94, 17, 210, 0.899);
   color: white;
   display: flex;
   flex-wrap: wrap;
@@ -27,12 +30,10 @@ nav {
   height: 5.5rem;
   font-size: 24px;
 }
-
 .navbar-brand,
 .nav-link {
   color: white;
 }
-
 .connect-wallet {
   font-size: 18px;
   width: 10rem;
@@ -56,7 +57,6 @@ nav {
   margin: 0 auto;
   margin-top: 3%;
 }
-
 .mainH1 {
   display: flex;
   text-align: center;
@@ -71,19 +71,16 @@ nav {
   position: absolute;
   right: 30%;
 }
-
 .homeCard,
 .projectCard {
   background-color: #5a576600;
   border: none;
 }
-
 .homeCard {
   margin: 15px auto;
   padding: 10px;
   width: 99%;
 }
-
 .additionals {
   width: 98%;
   display: flex;
@@ -91,7 +88,6 @@ nav {
   justify-content: space-evenly;
   margin-top: 3%;
 }
-
 .picture {
   background-color: #787683;
   box-shadow: inset 5px 5px 20px 20px #61e78737, -15px 15px 25px #9792e3;
@@ -101,18 +97,15 @@ nav {
   justify-content: center;
   border-radius: 10px;
 }
-
 .pictureFigure {
   justify-content: center;
   margin: auto;
   padding: 15px;
 }
-
 .fig-caption {
   color: white;
   text-align: center;
 }
-
 .project {
   background-color: #787683;
   box-shadow: inset 5px 5px 20px 20px #61e78737, 15px 15px 25px #9792e3,
@@ -121,7 +114,6 @@ nav {
   border-radius: 10px;
   text-align: center;
 }
-
 .projectCard {
   width: 85%;
   line-height: 2rem;
@@ -130,64 +122,90 @@ nav {
   margin-top: 7%;
   padding: 10px;
 }
+.project-btn {
+  background-color: #61e786;
+  box-shadow: inset 0 0 15px 5px #9792e3b1;
+  border: solid 1px #edffec;
+  width: 10rem;
+  height: 3rem;
+  padding: 10px;
+}
+.project-btn:hover {
+  background-color: #48435c;
+  box-shadow: inset 0 0 15px 5px #9792e3c0;
+  border: solid 1px #61e786;
+  --bs-btn-active-bg: #48435c;
+  --bs-btn-active-border-color: #61e786;
+}
 
 /* End of Home.js styling */
 
 /* AiNFT.js Styling */
 .container {
   display: flex;
-  justify-content: center;
 }
-
 .form-wrapper {
-  background-color: #000000;
-  box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.166),
-    0 0 25px rgba(94, 17, 210, 0.477), 0 0 1px 1px rgb(14, 14, 14);
+  background-color: #787683;
+  box-shadow: inset 5px 5px 20px 20px #61e78737, -10px 10px 15px #9792e3;
+  border: solid 1px #61e786;
   border-radius: 10px;
   width: 55%;
   margin: 5% 2%;
   padding: 10px;
+  flex-wrap: wrap;
 }
-
 .prompt-form,
 .metadata-form {
   padding: 10px;
-  background-color: rgba(48, 149, 129, 0.278);
   width: 95%;
   margin: 5px auto;
   border-radius: 5px;
+  text-align: center;
 }
-
+.metadata-h1,
+.prompt-h1 {
+  background-color: #5a5766;
+  border-radius: 7px;
+  border: solid 1px #61e786;
+  width: 400px;
+}
+.form-text {
+  color: white;
+}
 .att {
-  width: 99%;
-  margin: auto 3px;
+  width: 100%;
+  margin: auto;
   padding: 5px;
 }
-
 input.form-control {
   margin: 2px auto;
 }
-
+.mint-btn,
 .generate-btn {
   width: 100%;
+  background-color: #61e786;
+  box-shadow: inset 0 0 15px 5px #9792e3b1;
+  border: solid 1px #edffec;
 }
-
-.mint-btn {
-  width: 99%;
-  margin: auto 5px;
+.mint-btn:hover,
+.generate-btn:hover {
+  background-color: #48435c;
+  box-shadow: inset 0 0 15px 5px #9792e3c0;
+  border: solid 1px #61e786;
+  --bs-btn-active-bg: #48435c;
+  --bs-btn-active-border-color: #61e786;
 }
 
 .image-wrapper {
-  background-color: #000000;
-  box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.166),
-    0 0 25px rgba(94, 17, 210, 0.477), 0 0 1px 1px rgb(14, 14, 14);
+  background-color: #787683;
+  border: solid 1px #61e786;
+  box-shadow: 10px 10px 15px #9792e3;
   border-radius: 10px;
   padding: 10px;
   margin: 5% 0 0 0;
   height: 40%;
   width: 50%;
 }
-
 .generated-image {
   display: flex;
   justify-content: center;
@@ -197,7 +215,6 @@ input.form-control {
   border: solid var(--honeydew);
   box-shadow: 0px 0px 5px 5px #61e78737;
 }
-
 .generated-image img {
   width: 600px;
   height: 600px;
@@ -209,7 +226,7 @@ footer {
   margin-top: 40px;
   background-color: #000000;
   box-shadow: inset 15px 15px 60px 60px rgba(227, 225, 231, 0.139),
-    0 0 10px rgba(94, 17, 210, 0.477);
+    0 0 10px rgb(94, 17, 210);
   height: 9rem;
   text-align: center;
   padding: 40px;

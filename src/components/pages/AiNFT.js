@@ -188,7 +188,7 @@ export function AiNFT({ signer, provider, nft }) {
         <div className="form-wrapper">
           <Form className="prompt-form">
             <Form.Label>
-              <h1>Enter A Prompt</h1>
+              <h1 className="prompt-h1">Enter Prompt</h1>
             </Form.Label>
             <Form.Group className="mb-3">
               <Form.Control
@@ -198,9 +198,12 @@ export function AiNFT({ signer, provider, nft }) {
                   setPrompt(e.target.value);
                 }}
               />
-              <Form.Text className="text-muted">
+              <Form.Text>
                 What makes a good{" "}
-                <a href="https://stable-diffusion-art.com/prompt-guide/">
+                <a
+                  className="link"
+                  href="https://stable-diffusion-art.com/prompt-guide/"
+                >
                   Prompt
                 </a>
                 ?
@@ -217,16 +220,19 @@ export function AiNFT({ signer, provider, nft }) {
           </Form>
           <Form className="metadata-form">
             <Form.Label>
-              <h1>Enter NFT Details</h1>
+              <h1 className="metadata-h1">Enter Metadata</h1>
             </Form.Label>
             <Form.Group className="mb-2" controlId="formBasicNFTName">
-              <Form.Text className="text-muted">
+              <Form.Text>
                 List your Trait Type and description of that attribute. You must
                 come up with all nine attributes! Read{" "}
-                <a href="https://docs.opensea.io/docs/metadata-standards">
+                <a
+                  className="link"
+                  href="https://docs.opensea.io/docs/metadata-standards"
+                >
                   here
-                </a>
-                for more information about .
+                </a>{" "}
+                for more information about.
               </Form.Text>
               <Form.Control
                 type="input"
@@ -235,9 +241,7 @@ export function AiNFT({ signer, provider, nft }) {
                   setName(e.target.value);
                 }}
               />
-              <Form.Text className="text-muted">
-                Give your NFT a name.
-              </Form.Text>
+              <Form.Text>Give your NFT a name.</Form.Text>
             </Form.Group>
             <Form.Group className="mb-2" controlId="formBasicDescription">
               <Form.Control
@@ -248,7 +252,7 @@ export function AiNFT({ signer, provider, nft }) {
                   setDescription(e.target.value);
                 }}
               />
-              <Form.Text className="text-muted">
+              <Form.Text>
                 Enter a description, mission, story, or message about your NFT.
               </Form.Text>
             </Form.Group>
@@ -376,7 +380,10 @@ export function AiNFT({ signer, provider, nft }) {
           </div>
           {viewMetadata && url ? (
             <p>
-              View <a href={url}>Metadata</a>
+              View{" "}
+              <a className="link" href={url}>
+                Metadata
+              </a>
             </p>
           ) : (
             <p>Metadata will be displayed here after creating a NFT!</p>
