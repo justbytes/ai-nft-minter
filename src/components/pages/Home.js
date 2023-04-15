@@ -27,7 +27,7 @@ export function Home() {
           </Card.Body>
         </Card>
       </div>
-      <div className="additionals">
+      <div className="figs">
         <div className="picture">
           <Figure className="pictureFigure">
             <Figure.Image

@@ -11,14 +11,14 @@ import {
 export function Footer() {
   return (
     <footer>
-      <a href="discord.com">
+      <a href="https://discord.gg/ur9tFfDC">
         <FontAwesomeIcon
           icon={faDiscord}
           size="lg"
           style={{ color: "#e7eaee" }}
         />
       </a>
-      <a href="twitter.com">
+      <a href="https://twitter.com/to_devy">
         <FontAwesomeIcon
           icon={faTwitter}
           size="lg"

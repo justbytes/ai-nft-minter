@@ -29,11 +29,8 @@ export function Navigation({ account, setAccount }) {
   return (
     <Navbar className="navbar-container" expand="lg">
       <Container fluid>
-        <Navbar.Brand className="brand-name" href="#/home">
-          NFT Genie
-        </Navbar.Brand>
-
         <Nav className="me-auto navbar justify-content-start">
+          <Nav.Link href="#/home">NFT Genie</Nav.Link>
           <Nav.Link href="#/aiNFT">Make a NFT</Nav.Link>
           <NavDropdown
             className="nav-dropdown"

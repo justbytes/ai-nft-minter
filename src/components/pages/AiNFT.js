@@ -224,15 +224,15 @@ export function AiNFT({ signer, provider, nft }) {
             </Form.Label>
             <Form.Group className="mb-2" controlId="formBasicNFTName">
               <Form.Text>
-                List your Trait Type and description of that attribute. You must
-                come up with all nine attributes! Read{" "}
+                In this section you will name your NFT, give it a description,
+                and add 6 attributes! If you need some help with this part click{" "}
                 <a
                   className="link"
                   href="https://docs.opensea.io/docs/metadata-standards"
                 >
                   here
                 </a>{" "}
-                for more information about.
+                to learn more.
               </Form.Text>
               <Form.Control
                 type="input"
@@ -386,7 +386,9 @@ export function AiNFT({ signer, provider, nft }) {
               </a>
             </p>
           ) : (
-            <p>Metadata will be displayed here after creating a NFT!</p>
+            <p className="metadata-link">
+              Metadata will be displayed here after creating a NFT!
+            </p>
           )}
         </div>
       </Container>
