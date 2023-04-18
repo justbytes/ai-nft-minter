@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
-//Import pages
+
+// Import pages
 import { Navigation } from "./components/Navigation";
 import { Footer } from "./components/Footer";
 import { Home } from "./components/pages/Home";
 import { AiNFT } from "./components/pages/AiNFT";
 
-//Import contract ABI
+// Import contract ABI
 import ABI from "./abi/NFT.json";
 
+// Import styling
 import "./style/App.css";
 
 function App() {
+  // Set state variables
   const [account, setAccount] = useState("");
   const [provider, setProvider] = useState("");
   const [signer, setSigner] = useState("");
   const [nft, setNFT] = useState(null);
 
+  // Connect front end to blockchain
   const loadBlockchainData = async () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -33,7 +37,7 @@ function App() {
         signer
       );
       setNFT(nft);
-
+      // Get first account in MetaMask
       const accounts = await provider.listAccounts();
       setAccount(accounts[0]);
     } else {

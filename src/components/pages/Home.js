@@ -1,8 +1,11 @@
 import React from "react";
+
+// Import react-bootstrap components
 import Figure from "react-bootstrap/Figure";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
+//Import NFT Genie logo image
 import profilePic from "../../images/genie.jpeg";
 
 export function Home() {
@@ -14,15 +17,41 @@ export function Home() {
           <Card.Body>
             <h3>How it works</h3>
             <p>
-              Welcome to NFT Genie, where you can unleash your creativity and
-              bring your digital creations to life in just minutes! With our
-              user-friendly Stable Diffusion text-to-image generator, you can
-              easily generate stunning visuals by simply typing in a prompt.
-              Once you find the perfect image, simply click the 'Mint NFT'
-              button to upload it to IPFS, pay the gas fee, and voila! You've
-              just created your very own unique NFT. And the best part? You can
-              show off your masterpiece on Open Sea and potentially earn some
-              cash.
+              Welcome to NFT Genie, where you can create NFTs in just minutes.
+              NFT Genie makes this possible by using the dreaded ARTIFICIAL
+              INTELLIGENCE, but more specifically it uses Stable Diffusion
+              text-to-image generator. After following the steps below you will
+              have minted your image into an NFT that is 100% yours for FREE
+              (expect for gas fees). Then head over to the NFT Marketplace{" "}
+              <a className="link" href="https://opensea.io/">
+                OpenSea
+              </a>{" "}
+              to list, share, and admire your creation. If you like NFT Genie
+              please join our Discord and share your creations!
+              <br />
+              <br />
+              <span className="steps">
+                Steps to creating a NFT with NFT Genie:
+              </span>
+              <br />
+              1. Connect your MetaMask Wallet.
+              <br />
+              <br />
+              2. Create a prompt. Read{" "}
+              <a
+                className="link"
+                href="https://stable-diffusion-art.com/prompt-guide/"
+              >
+                HERE
+              </a>{" "}
+              if you want to know what makes a good prompt.
+              <br />
+              <br />
+              3. Create your metadata. Give the NFT a name, description, and
+              attributes.
+              <br />
+              <br />
+              4. Click 'Mint NFT' pay the gas fee and you're set!
             </p>
           </Card.Body>
         </Card>

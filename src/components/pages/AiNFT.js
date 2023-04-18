@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-
 import axios from "axios";
 import { NFTStorage } from "nft.storage";
 import { Buffer } from "buffer";
 
-//Import react components
+// Import react-bootstrap components
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
+// Import NFT Genie logo picture
 import profilePic from "../../images/genie.jpeg";
 
-//Import api key
+// Import api keys
 require("dotenv").config();
 
 export function AiNFT({ signer, provider, nft }) {
-  //Set State variables
+  // Set State variables
   const [prompt, setPrompt] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -26,7 +26,7 @@ export function AiNFT({ signer, provider, nft }) {
   const [isWaiting, setIsWaiting] = useState(false);
   const [message, setMessage] = useState("");
   const [viewMetadata, setViewMetadata] = useState(false);
-  //State attribute variables for nft metadata
+  // State attribute variables for nft metadata
   const [trait0, setTrait0] = useState(null);
   const [value0, setValue0] = useState(null);
   const [trait1, setTrait1] = useState(null);
@@ -40,32 +40,37 @@ export function AiNFT({ signer, provider, nft }) {
   const [trait5, setTrait5] = useState(null);
   const [value5, setValue5] = useState(null);
 
+  // On click generate image
   const generateImage = async (e) => {
     e.preventDefault();
-
+    // Display if user failed to enter prompt
     if (prompt === "") {
       window.alert("Please provide a prompt");
       return;
     }
+    // Start API call
     createImage();
+    // Set isWaiting to true to enable loading screen with bootstrap spinner
     setIsWaiting(true);
     setMessage("Generating image. This can take a minute...");
   };
 
+  // On click upload image to IPFS and Mint
   const manageImage = async (e) => {
     e.preventDefault();
-
+    // Conditional ensuring image has been generated
     if (image === null || image === "") {
       window.alert("Generate an image before minting");
       return;
     }
+    // Begin NFTStorage API call
     uploadImage();
   };
 
+  // Generate Stable diffusion AI image
   const createImage = async () => {
     console.log("generating...");
     const URL = `https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2`;
-
     // Send the request
     const response = await axios({
       url: URL,
@@ -75,6 +80,7 @@ export function AiNFT({ signer, provider, nft }) {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      //set options for stable diffusion
       data: JSON.stringify({
         inputs: prompt,
         options: {
@@ -128,11 +134,11 @@ export function AiNFT({ signer, provider, nft }) {
     const nftstorage = new NFTStorage({
       token: process.env.REACT_APP_NFTSTORAGE,
     });
-
+    // Convert image to blob so it can be uploaded to IPFS
     const blob = await (await fetch(image)).blob();
     const imageHash = await nftstorage.storeBlob(blob);
     console.log("Image Hash:", blob);
-
+    // Create NFT metadata with name, description, image, and attributes
     const { ipnft } = await nftstorage.store({
       name: name,
       description: description,
@@ -164,18 +170,18 @@ export function AiNFT({ signer, provider, nft }) {
         },
       ],
     });
-
-    // Save the URL
+    // Set new URL
     const url = `https://ipfs.io/ipfs/${ipnft}/metadata.json`;
     setURL(url);
     console.log(url);
-
+    // Pass url to mint image function
     mintImage(url);
+    // Display link to metadata
     setViewMetadata(true);
   };
 
+  // Mint image/metadata into NFT
   const mintImage = async (url) => {
-    console.log(url);
     const signer = await provider.getSigner();
     const nftWithSigner = nft.connect(signer);
     const tx = await nftWithSigner.mint(url);

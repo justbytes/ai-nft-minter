@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
-//Import React components
+
+// Import React components
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 export function Navigation({ account, setAccount }) {
-  //Set state variables
+  //Set state variable
   const [showDropdown, setShowDropdown] = useState(false);
 
+  // Toggles dropdown when mouse hovers
   const handleDropdownMouseEnter = () => {
     setShowDropdown(true);
   };
-
+  // Toggles dropdown when mouse hovers
   const handleDropdownLeave = () => {
     setShowDropdown(false);
   };
 
+  // Connect to MetaMask wallet
   const connectHandler = async () => {
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",

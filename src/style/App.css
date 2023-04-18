@@ -22,6 +22,7 @@ body {
 
 h3 {
   font-family: "Luckiest Guy", cursive;
+  border-bottom: 1px solid #48435c81;
 }
 /* Navigation.js styling */
 nav {
@@ -106,6 +107,11 @@ nav {
   padding: 10px;
   width: 99%;
 }
+.steps {
+  font-family: "Luckiest Guy", cursive;
+  font-size: 24px;
+  border-bottom: 1px solid #48435c81;
+}
 .figs {
   width: 98%;
   display: flex;
@@ -154,7 +160,8 @@ nav {
   border: solid 1px #edffec;
   width: 10rem;
   height: 3rem;
-  padding: 10px;
+  padding: 15px;
+  font-family: "Luckiest Guy", cursive;
 }
 .project-btn:hover {
   background-color: #48435c;
@@ -213,9 +220,12 @@ input.form-control {
 .mint-btn,
 .generate-btn {
   width: 100%;
+  height: 2.5rem;
   background-color: #61e786;
   box-shadow: inset 0 0 15px 5px #9792e3b1;
   border: solid 1px #edffec;
+  font-family: "Luckiest Guy", cursive;
+  padding: 10px;
 }
 .mint-btn:hover,
 .generate-btn:hover {
