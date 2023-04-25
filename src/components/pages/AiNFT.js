@@ -190,183 +190,189 @@ export function AiNFT({ signer, provider, nft }) {
 
   return (
     <>
-      <Container>
+      <div className="main-wrapper">
         <div className="form-wrapper">
           <Form className="prompt-form">
-            <Form.Label>
-              <h1 className="prompt-h1">Enter Prompt</h1>
-            </Form.Label>
-            <Form.Group className="mb-3">
-              <Form.Control
-                as="textarea"
-                rows={3}
-                onChange={(e) => {
-                  setPrompt(e.target.value);
-                }}
-              />
-              <Form.Text>
-                What makes a good{" "}
-                <a
-                  className="link"
-                  href="https://stable-diffusion-art.com/prompt-guide/"
-                >
-                  Prompt
-                </a>
-                ?
-              </Form.Text>
-            </Form.Group>
-            <Button
-              variant="primary"
-              className="btn generate-btn"
-              onClick={(e) => generateImage(e)}
-              type="submit"
-            >
-              Generate Image
-            </Button>
+            <div className="gen-text-bg">
+              <Form.Label>
+                <h1 className="prompt-h1">Enter Prompt</h1>
+              </Form.Label>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  onChange={(e) => {
+                    setPrompt(e.target.value);
+                  }}
+                />
+                <Form.Text>
+                  What makes a good{" "}
+                  <a
+                    className="link"
+                    href="https://stable-diffusion-art.com/prompt-guide/"
+                  >
+                    PROMPT
+                  </a>
+                  ?
+                </Form.Text>
+              </Form.Group>
+              <Button
+                variant="primary"
+                className="btn generate-btn"
+                onClick={(e) => generateImage(e)}
+                type="submit"
+              >
+                Generate Image
+              </Button>
+            </div>
           </Form>
           <Form className="metadata-form">
-            <Form.Label>
-              <h1 className="metadata-h1">Enter Metadata</h1>
-            </Form.Label>
-            <Form.Group className="mb-2" controlId="formBasicNFTName">
-              <Form.Text>
-                In this section you will name your NFT, give it a description,
-                and add 6 attributes! If you need some help with this part click{" "}
-                <a
-                  className="link"
-                  href="https://docs.opensea.io/docs/metadata-standards"
-                >
-                  here
-                </a>{" "}
-                to learn more.
-              </Form.Text>
-              <Form.Control
-                type="input"
-                placeholder="NFT Name"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-              <Form.Text>Give your NFT a name.</Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-2" controlId="formBasicDescription">
-              <Form.Control
-                as="textarea"
-                rows={2}
-                placeholder="NFT Description"
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-              <Form.Text>
-                Enter a description, mission, story, or message about your NFT.
-              </Form.Text>
-            </Form.Group>
-            <Row className="att mb-2">
-              <Form.Control
-                type="input"
-                placeholder="Trait Type"
-                onChange={(e) => {
-                  setTrait0(e.target.value);
-                }}
-              />
-              <Form.Control
-                type="input"
-                placeholder="Value"
-                onChange={(e) => {
-                  setValue0(e.target.value);
-                }}
-              />
-            </Row>
-            <Row className="att mb-2">
-              <Form.Control
-                type="input"
-                placeholder="Trait Type"
-                onChange={(e) => {
-                  setTrait1(e.target.value);
-                }}
-              />
-              <Form.Control
-                type="input"
-                placeholder="Value"
-                onChange={(e) => {
-                  setValue1(e.target.value);
-                }}
-              />
-            </Row>
-            <Row className="att mb-2">
-              <Form.Control
-                type="input"
-                placeholder="Trait Type"
-                onChange={(e) => {
-                  setTrait2(e.target.value);
-                }}
-              />
-              <Form.Control
-                type="input"
-                placeholder="Value"
-                onChange={(e) => {
-                  setValue2(e.target.value);
-                }}
-              />
-            </Row>
-            <Row className="att mb-2">
-              <Form.Control
-                type="input"
-                placeholder="Trait Type"
-                onChange={(e) => {
-                  setTrait3(e.target.value);
-                }}
-              />
-              <Form.Control
-                type="input"
-                placeholder="Value"
-                onChange={(e) => {
-                  setValue3(e.target.value);
-                }}
-              />
-            </Row>
-            <Row className="att mb-2">
-              <Form.Control
-                type="input"
-                placeholder="Trait Type"
-                onChange={(e) => {
-                  setTrait4(e.target.value);
-                }}
-              />
-              <Form.Control
-                type="input"
-                placeholder="Value"
-                onChange={(e) => {
-                  setValue4(e.target.value);
-                }}
-              />
-            </Row>
-            <Row className="att mb-2">
-              <Form.Control
-                type="input"
-                placeholder="Trait Type"
-                onChange={(e) => {
-                  setTrait5(e.target.value);
-                }}
-              />
-              <Form.Control
-                type="input"
-                placeholder="Value"
-                onChange={(e) => {
-                  setValue5(e.target.value);
-                }}
-              />
-            </Row>
+            <div className="gen-text-bg">
+              <Form.Label>
+                <h1 className="metadata-h1">Enter Metadata</h1>
+              </Form.Label>
+              <Form.Group className="mb-2" controlId="formBasicNFTName">
+                <Form.Text>
+                  In this section you will name your NFT, give it a description,
+                  and add 6 attributes! If you need some help with this part
+                  click{" "}
+                  <a
+                    className="link"
+                    href="https://docs.opensea.io/docs/metadata-standards"
+                  >
+                    HERE
+                  </a>{" "}
+                  to learn more.
+                </Form.Text>
+                <Form.Control
+                  type="input"
+                  placeholder="NFT Name"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+                <Form.Text>Give your NFT a name.</Form.Text>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formBasicDescription">
+                <Form.Control
+                  as="textarea"
+                  rows={2}
+                  placeholder="NFT Description"
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                />
+                <Form.Text>
+                  Enter a description, mission, story, or message about your
+                  NFT.
+                </Form.Text>
+              </Form.Group>
+              <Row className="att mb-2">
+                <Form.Control
+                  type="input"
+                  placeholder="Trait Type"
+                  onChange={(e) => {
+                    setTrait0(e.target.value);
+                  }}
+                />
+                <Form.Control
+                  type="input"
+                  placeholder="Value"
+                  onChange={(e) => {
+                    setValue0(e.target.value);
+                  }}
+                />
+              </Row>
+              <Row className="att mb-2">
+                <Form.Control
+                  type="input"
+                  placeholder="Trait Type"
+                  onChange={(e) => {
+                    setTrait1(e.target.value);
+                  }}
+                />
+                <Form.Control
+                  type="input"
+                  placeholder="Value"
+                  onChange={(e) => {
+                    setValue1(e.target.value);
+                  }}
+                />
+              </Row>
+              <Row className="att mb-2">
+                <Form.Control
+                  type="input"
+                  placeholder="Trait Type"
+                  onChange={(e) => {
+                    setTrait2(e.target.value);
+                  }}
+                />
+                <Form.Control
+                  type="input"
+                  placeholder="Value"
+                  onChange={(e) => {
+                    setValue2(e.target.value);
+                  }}
+                />
+              </Row>
+              <Row className="att mb-2">
+                <Form.Control
+                  type="input"
+                  placeholder="Trait Type"
+                  onChange={(e) => {
+                    setTrait3(e.target.value);
+                  }}
+                />
+                <Form.Control
+                  type="input"
+                  placeholder="Value"
+                  onChange={(e) => {
+                    setValue3(e.target.value);
+                  }}
+                />
+              </Row>
+              <Row className="att mb-2">
+                <Form.Control
+                  type="input"
+                  placeholder="Trait Type"
+                  onChange={(e) => {
+                    setTrait4(e.target.value);
+                  }}
+                />
+                <Form.Control
+                  type="input"
+                  placeholder="Value"
+                  onChange={(e) => {
+                    setValue4(e.target.value);
+                  }}
+                />
+              </Row>
+              <Row className="att mb-2">
+                <Form.Control
+                  type="input"
+                  placeholder="Trait Type"
+                  onChange={(e) => {
+                    setTrait5(e.target.value);
+                  }}
+                />
+                <Form.Control
+                  type="input"
+                  placeholder="Value"
+                  onChange={(e) => {
+                    setValue5(e.target.value);
+                  }}
+                />
+              </Row>
 
-            <Button
-              variant="primary"
-              className="btn mint-btn"
-              onClick={(e) => manageImage(e)}
-              type="submit"
-            >
-              Mint NFT
-            </Button>
+              <Button
+                variant="primary"
+                className="btn mint-btn"
+                onClick={(e) => manageImage(e)}
+                type="submit"
+              >
+                Mint NFT
+              </Button>
+            </div>
           </Form>
         </div>
         <div className="image-wrapper">
@@ -385,7 +391,7 @@ export function AiNFT({ signer, provider, nft }) {
             )}
           </div>
           {viewMetadata && url ? (
-            <p>
+            <p className="metadata-link">
               View{" "}
               <a className="link" href={url}>
                 Metadata
@@ -397,7 +403,7 @@ export function AiNFT({ signer, provider, nft }) {
             </p>
           )}
         </div>
-      </Container>
+      </div>
     </>
   );
 }
