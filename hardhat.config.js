@@ -6,8 +6,12 @@ module.exports = {
   networks: {
     goerli: {
       url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_PRIVATE_KEY}`,
-      accounts: [process.env.GOERLI_WALLET_KEY],
+      accounts: [process.env.WALLET_KEY],
     },
+    // mainnet: {
+    //   url: `${process.env.MAINNET_URL}`,
+    //   accounts: [process.env.NFT_GENIE_KEY]
+    // }
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API,

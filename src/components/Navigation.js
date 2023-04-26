@@ -55,7 +55,9 @@ export function Navigation({ account, setAccount }) {
               View collection on OpenSea
             </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item>View Contract</NavDropdown.Item>
+            <NavDropdown.Item href="https://goerli.etherscan.io/address/0x5a5fe2dda9a68aec28f4204ade54f245106d0e11">
+              View Contract
+            </NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Nav className="ml-auto">

@@ -6,7 +6,7 @@ async function main() {
   const nftMinter = await NFTMinter.deploy("NFT Genie", "NFTG");
   await nftMinter.deployed();
 
-  console.log(`AI NFT Minter deployed to ${nftMinter.address}`);
+  console.log(`Smart contract deployed to ${nftMinter.address}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
