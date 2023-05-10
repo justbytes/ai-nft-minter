@@ -14,7 +14,7 @@ import Container from "react-bootstrap/Container";
 import profilePic from "../../images/genie.jpeg";
 
 // Import api keys
-require("dotenv").config();
+// require("dotenv").config();
 
 export function AiNFT({ signer, provider, nft }) {
   // Set State variables
