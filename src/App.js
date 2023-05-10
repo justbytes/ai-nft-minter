@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
 
@@ -20,6 +20,13 @@ function App() {
   const [provider, setProvider] = useState("");
   const [signer, setSigner] = useState("");
   const [nft, setNFT] = useState(null);
+
+  // Memoize values
+  const providerValue = useMemo(
+    () => ({ provider, signer }),
+    [provider, signer]
+  );
+  const nftValue = useMemo(() => ({ nft, signer }), [nft, signer]);
 
   // Connect front end to blockchain
   const loadBlockchainData = async () => {
@@ -57,7 +64,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route
           path="/AiNFT"
-          element={<AiNFT signer={signer} provider={provider} nft={nft} />}
+          element={<AiNFT {...nftValue} {...providerValue} />}
         />
       </Routes>
       <Footer />

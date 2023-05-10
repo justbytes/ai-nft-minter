@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import axios from "axios";
 import { NFTStorage } from "nft.storage";
 import { Buffer } from "buffer";
@@ -8,13 +8,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
 
 // Import NFT Genie logo picture
 import profilePic from "../../images/genie.jpeg";
-
-// Import api keys
-// require("dotenv").config();
 
 export function AiNFT({ signer, provider, nft }) {
   // Set State variables
@@ -40,10 +36,24 @@ export function AiNFT({ signer, provider, nft }) {
   const [trait5, setTrait5] = useState(null);
   const [value5, setValue5] = useState(null);
 
-  // On click generate image
-  const generateImage = async (e) => {
+  const handlePromptChange = useCallback((e) => {
+    setPrompt(e.target.value);
+  }, []);
+
+  // const handleNameChange = useCallback((e) => {
+  //   setName(e.target.value);
+  // }, [])
+
+  // const handleDescriptionChange = useCallback((e) => {
+  //   setDescription(e.target.value);
+  // }, [])
+
+  // const handleAttributeChange = useCallback((e) => {
+  //   set(e.target.value);
+  // }, [])
+
+  const handlePromptSubmit = useCallback((e) => {
     e.preventDefault();
-    // Display if user failed to enter prompt
     if (prompt === "") {
       window.alert("Please provide a prompt");
       return;
@@ -53,7 +63,7 @@ export function AiNFT({ signer, provider, nft }) {
     // Set isWaiting to true to enable loading screen with bootstrap spinner
     setIsWaiting(true);
     setMessage("Generating image. This can take a minute...");
-  };
+  });
 
   // On click upload image to IPFS and Mint
   const manageImage = async (e) => {
@@ -84,32 +94,6 @@ export function AiNFT({ signer, provider, nft }) {
       data: JSON.stringify({
         inputs: prompt,
         options: {
-          // negative_prompt: [
-          //   "Blurred",
-          //   "Overexposed",
-          //   "Underexposed",
-          //   "Low contrast",
-          //   "Noisy",
-          //   "Unnatural colors",
-          //   "Unbalanced composition",
-          //   "Off-topic",
-          //   "lowers",
-          //   "error",
-          //   "cropped",
-          //   "worst quality",
-          //   "low quality",
-          //   "jpeg artifacts",
-          //   "out of frame",
-          //   "watermark",
-          //   "signature",
-          //   "deformed",
-          //   "ugly",
-          //   "mutilated",
-          //   "disfigured",
-          //   "bad proportions",
-          //   "mutated hands",
-          //   "poorly drawn face",
-          // ],
           wait_for_model: true,
           num_inference_steps: 25,
           guidance_scale: 12,
@@ -120,7 +104,6 @@ export function AiNFT({ signer, provider, nft }) {
 
     const type = response.headers["content-type"];
     const data = response.data;
-
     const base64data = Buffer.from(data).toString("base64");
     const img = `data:${type};base64,` + base64data; // <-- This is so we can render it on the page
     await setImage(img);
@@ -192,7 +175,7 @@ export function AiNFT({ signer, provider, nft }) {
     <>
       <div className="main-wrapper">
         <div className="form-wrapper">
-          <Form className="prompt-form">
+          <Form onSubmit={handlePromptSubmit} className="prompt-form">
             <div className="gen-text-bg">
               <Form.Label>
                 <h1 className="prompt-h1">Enter Prompt</h1>
@@ -201,9 +184,7 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  onChange={(e) => {
-                    setPrompt(e.target.value);
-                  }}
+                  onChange={handlePromptChange}
                 />
                 <Form.Text>
                   What makes a good{" "}
@@ -219,7 +200,7 @@ export function AiNFT({ signer, provider, nft }) {
               <Button
                 variant="primary"
                 className="btn generate-btn"
-                onClick={(e) => generateImage(e)}
+                // onClick={(e) => generateImage(e)}
                 type="submit"
               >
                 Generate Image
@@ -247,7 +228,7 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   type="input"
                   placeholder="NFT Name"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setName(e.target.value);
                   }}
                 />
@@ -258,7 +239,7 @@ export function AiNFT({ signer, provider, nft }) {
                   as="textarea"
                   rows={2}
                   placeholder="NFT Description"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setDescription(e.target.value);
                   }}
                 />
@@ -271,14 +252,14 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   type="input"
                   placeholder="Trait Type"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setTrait0(e.target.value);
                   }}
                 />
                 <Form.Control
                   type="input"
                   placeholder="Value"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setValue0(e.target.value);
                   }}
                 />
@@ -287,14 +268,14 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   type="input"
                   placeholder="Trait Type"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setTrait1(e.target.value);
                   }}
                 />
                 <Form.Control
                   type="input"
                   placeholder="Value"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setValue1(e.target.value);
                   }}
                 />
@@ -303,14 +284,14 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   type="input"
                   placeholder="Trait Type"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setTrait2(e.target.value);
                   }}
                 />
                 <Form.Control
                   type="input"
                   placeholder="Value"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setValue2(e.target.value);
                   }}
                 />
@@ -319,14 +300,14 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   type="input"
                   placeholder="Trait Type"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setTrait3(e.target.value);
                   }}
                 />
                 <Form.Control
                   type="input"
                   placeholder="Value"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setValue3(e.target.value);
                   }}
                 />
@@ -335,14 +316,14 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   type="input"
                   placeholder="Trait Type"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setTrait4(e.target.value);
                   }}
                 />
                 <Form.Control
                   type="input"
                   placeholder="Value"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setValue4(e.target.value);
                   }}
                 />
@@ -351,14 +332,14 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   type="input"
                   placeholder="Trait Type"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setTrait5(e.target.value);
                   }}
                 />
                 <Form.Control
                   type="input"
                   placeholder="Value"
-                  onChange={(e) => {
+                  onSubmit={(e) => {
                     setValue5(e.target.value);
                   }}
                 />
