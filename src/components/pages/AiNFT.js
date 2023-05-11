@@ -23,51 +23,86 @@ export function AiNFT({ signer, provider, nft }) {
   const [message, setMessage] = useState("");
   const [viewMetadata, setViewMetadata] = useState(false);
   // State attribute variables for nft metadata
-  const [trait0, setTrait0] = useState(null);
-  const [value0, setValue0] = useState(null);
-  const [trait1, setTrait1] = useState(null);
-  const [value1, setValue1] = useState(null);
-  const [trait2, setTrait2] = useState(null);
-  const [value2, setValue2] = useState(null);
-  const [trait3, setTrait3] = useState(null);
-  const [value3, setValue3] = useState(null);
-  const [trait4, setTrait4] = useState(null);
-  const [value4, setValue4] = useState(null);
-  const [trait5, setTrait5] = useState(null);
-  const [value5, setValue5] = useState(null);
+
+  const [metadata, setMetadata] = useState({
+    name: "",
+    description: "",
+    attributes: [
+      { trait: "", value: "" },
+      { trait: "", value: "" },
+      { trait: "", value: "" },
+      { trait: "", value: "" },
+      { trait: "", value: "" },
+      { trait: "", value: "" },
+    ],
+  });
+  const [attributes, setAttributes] = useState([]);
 
   const handlePromptChange = useCallback((e) => {
     setPrompt(e.target.value);
   }, []);
 
-  // const handleNameChange = useCallback((e) => {
-  //   setName(e.target.value);
-  // }, [])
+  const handleInputChange = useCallback(
+    (e, index, field) => {
+      const updatedAttributes = [...metadata.attributes];
+      updatedAttributes[index][field] = e.target.value;
+      setMetadata((prevMetadata) => ({
+        ...prevMetadata,
+        attributes: updatedAttributes,
+      }));
+    },
+    [metadata.attributes]
+  );
 
-  // const handleDescriptionChange = useCallback((e) => {
-  //   setDescription(e.target.value);
-  // }, [])
+  const handleNameChange = useCallback((e) => {
+    setMetadata((prevMetadata) => ({ ...prevMetadata, name: e.target.value }));
+  }, []);
 
-  // const handleAttributeChange = useCallback((e) => {
-  //   set(e.target.value);
-  // }, [])
+  const handleDescriptionChange = useCallback((e) => {
+    setMetadata((prevMetadata) => ({
+      ...prevMetadata,
+      description: e.target.value,
+    }));
+  }, []);
 
-  const handlePromptSubmit = useCallback((e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    const attributes = metadata.attributes.map(({ trait, value }) => ({
+      trait_type: trait,
+      value: value,
+    }));
+
     if (prompt === "") {
       window.alert("Please provide a prompt");
       return;
     }
+
     // Start API call
-    createImage();
+    manageImage();
     // Set isWaiting to true to enable loading screen with bootstrap spinner
     setIsWaiting(true);
-    setMessage("Generating image. This can take a minute...");
-  });
+    setMessage("Minting your image please wait. This can take a minute...");
+  };
+
+  const handlePromptSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (prompt === "") {
+        window.alert("Please provide a prompt");
+        return;
+      }
+      // Start API call
+      createImage();
+      // Set isWaiting to true to enable loading screen with bootstrap spinner
+      setIsWaiting(true);
+      setMessage("Generating image. This can take a minute...");
+    },
+    [createImage, prompt]
+  );
 
   // On click upload image to IPFS and Mint
-  const manageImage = async (e) => {
-    e.preventDefault();
+  async function manageImage() {
     // Conditional ensuring image has been generated
     if (image === null || image === "") {
       window.alert("Generate an image before minting");
@@ -75,10 +110,10 @@ export function AiNFT({ signer, provider, nft }) {
     }
     // Begin NFTStorage API call
     uploadImage();
-  };
+  }
 
   // Generate Stable diffusion AI image
-  const createImage = async () => {
+  async function createImage() {
     console.log("generating...");
     const URL = `https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2`;
     // Send the request
@@ -109,7 +144,7 @@ export function AiNFT({ signer, provider, nft }) {
     await setImage(img);
     setIsWaiting(false);
     setMessage("");
-  };
+  }
 
   const uploadImage = async () => {
     console.log("loading...");
@@ -121,38 +156,19 @@ export function AiNFT({ signer, provider, nft }) {
     const blob = await (await fetch(image)).blob();
     const imageHash = await nftstorage.storeBlob(blob);
     console.log("Image Hash:", blob);
-    // Create NFT metadata with name, description, image, and attributes
-    const { ipnft } = await nftstorage.store({
-      name: name,
-      description: description,
+
+    const attributes = metadata.attributes.map(({ trait, value }) => ({
+      trait_type: trait,
+      value: value,
+    }));
+    const metadataObj = {
+      name: metadata.name,
+      description: metadata.description,
       image: blob,
-      attributes: [
-        {
-          trait_type: trait0,
-          value: value0,
-        },
-        {
-          trait_type: trait1,
-          value: value1,
-        },
-        {
-          trait_type: trait2,
-          value: value2,
-        },
-        {
-          trait_type: trait3,
-          value: value3,
-        },
-        {
-          trait_type: trait4,
-          value: value4,
-        },
-        {
-          trait_type: trait5,
-          value: value5,
-        },
-      ],
-    });
+      attributes: attributes,
+    };
+    // Create NFT metadata with name, description, image, and attributes
+    const { ipnft } = await nftstorage.store(metadataObj);
     // Set new URL
     const url = `https://ipfs.io/ipfs/${ipnft}/metadata.json`;
     setURL(url);
@@ -169,6 +185,8 @@ export function AiNFT({ signer, provider, nft }) {
     const nftWithSigner = nft.connect(signer);
     const tx = await nftWithSigner.mint(url);
     await tx.wait();
+    setIsWaiting(false);
+    setImage(image);
   };
 
   return (
@@ -207,7 +225,7 @@ export function AiNFT({ signer, provider, nft }) {
               </Button>
             </div>
           </Form>
-          <Form className="metadata-form">
+          <Form className="metadata-form" onSubmit={handleFormSubmit}>
             <div className="gen-text-bg">
               <Form.Label>
                 <h1 className="metadata-h1">Enter Metadata</h1>
@@ -228,9 +246,8 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Control
                   type="input"
                   placeholder="NFT Name"
-                  onSubmit={(e) => {
-                    setName(e.target.value);
-                  }}
+                  value={metadata.name || ""}
+                  onChange={handleNameChange}
                 />
                 <Form.Text>Give your NFT a name.</Form.Text>
               </Form.Group>
@@ -239,118 +256,31 @@ export function AiNFT({ signer, provider, nft }) {
                   as="textarea"
                   rows={2}
                   placeholder="NFT Description"
-                  onSubmit={(e) => {
-                    setDescription(e.target.value);
-                  }}
+                  value={metadata.description || ""}
+                  onChange={handleDescriptionChange}
                 />
                 <Form.Text>
                   Enter a description, mission, story, or message about your
                   NFT.
                 </Form.Text>
               </Form.Group>
-              <Row className="att mb-2">
-                <Form.Control
-                  type="input"
-                  placeholder="Trait Type"
-                  onSubmit={(e) => {
-                    setTrait0(e.target.value);
-                  }}
-                />
-                <Form.Control
-                  type="input"
-                  placeholder="Value"
-                  onSubmit={(e) => {
-                    setValue0(e.target.value);
-                  }}
-                />
-              </Row>
-              <Row className="att mb-2">
-                <Form.Control
-                  type="input"
-                  placeholder="Trait Type"
-                  onSubmit={(e) => {
-                    setTrait1(e.target.value);
-                  }}
-                />
-                <Form.Control
-                  type="input"
-                  placeholder="Value"
-                  onSubmit={(e) => {
-                    setValue1(e.target.value);
-                  }}
-                />
-              </Row>
-              <Row className="att mb-2">
-                <Form.Control
-                  type="input"
-                  placeholder="Trait Type"
-                  onSubmit={(e) => {
-                    setTrait2(e.target.value);
-                  }}
-                />
-                <Form.Control
-                  type="input"
-                  placeholder="Value"
-                  onSubmit={(e) => {
-                    setValue2(e.target.value);
-                  }}
-                />
-              </Row>
-              <Row className="att mb-2">
-                <Form.Control
-                  type="input"
-                  placeholder="Trait Type"
-                  onSubmit={(e) => {
-                    setTrait3(e.target.value);
-                  }}
-                />
-                <Form.Control
-                  type="input"
-                  placeholder="Value"
-                  onSubmit={(e) => {
-                    setValue3(e.target.value);
-                  }}
-                />
-              </Row>
-              <Row className="att mb-2">
-                <Form.Control
-                  type="input"
-                  placeholder="Trait Type"
-                  onSubmit={(e) => {
-                    setTrait4(e.target.value);
-                  }}
-                />
-                <Form.Control
-                  type="input"
-                  placeholder="Value"
-                  onSubmit={(e) => {
-                    setValue4(e.target.value);
-                  }}
-                />
-              </Row>
-              <Row className="att mb-2">
-                <Form.Control
-                  type="input"
-                  placeholder="Trait Type"
-                  onSubmit={(e) => {
-                    setTrait5(e.target.value);
-                  }}
-                />
-                <Form.Control
-                  type="input"
-                  placeholder="Value"
-                  onSubmit={(e) => {
-                    setValue5(e.target.value);
-                  }}
-                />
-              </Row>
-
-              <Button
-                variant="primary"
-                className="btn mint-btn"
-                onClick={(e) => manageImage(e)}
-                type="submit"
-              >
+              {metadata.attributes.map((attribute, index) => (
+                <div className="att mb-2" key={index}>
+                  <Form.Control
+                    type="input"
+                    placeholder="Trait Type"
+                    value={attribute.trait || ""}
+                    onChange={(e) => handleInputChange(e, index, "trait")}
+                  />
+                  <Form.Control
+                    type="input"
+                    placeholder="Value"
+                    value={attribute.value || ""}
+                    onChange={(e) => handleInputChange(e, index, "value")}
+                  />
+                </div>
+              ))}
+              <Button variant="primary" className="btn mint-btn" type="submit">
                 Mint NFT
               </Button>
             </div>
