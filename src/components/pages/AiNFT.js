@@ -76,21 +76,18 @@ export function AiNFT({ signer, provider, nft }) {
     setMessage("Minting your image please wait. This can take a minute...");
   };
 
-  const handlePromptSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (prompt === "") {
-        window.alert("Please provide a prompt");
-        return;
-      }
-      // Start API call
-      createImage();
-      // Set isWaiting to true to enable loading screen with bootstrap spinner
-      setIsWaiting(true);
-      setMessage("Generating image. This can take a minute...");
-    },
-    [prompt]
-  );
+  const handlePromptSubmit = async (e) => (e) => {
+    e.preventDefault();
+    if (prompt === "") {
+      window.alert("Please provide a prompt");
+      return;
+    }
+    // Start API call
+    createImage();
+    // Set isWaiting to true to enable loading screen with bootstrap spinner
+    setIsWaiting(true);
+    setMessage("Generating image. This can take a minute...");
+  };
 
   // On click upload image to IPFS and Mint
   async function manageImage() {
