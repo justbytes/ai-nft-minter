@@ -7,7 +7,6 @@ import { Buffer } from "buffer";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
-import Row from "react-bootstrap/Row";
 
 // Import NFT Genie logo picture
 import profilePic from "../../images/genie.jpeg";
@@ -15,8 +14,6 @@ import profilePic from "../../images/genie.jpeg";
 export function AiNFT({ signer, provider, nft }) {
   // Set State variables
   const [prompt, setPrompt] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [url, setURL] = useState(null);
   const [isWaiting, setIsWaiting] = useState(false);
@@ -36,7 +33,6 @@ export function AiNFT({ signer, provider, nft }) {
       { trait: "", value: "" },
     ],
   });
-  const [attributes, setAttributes] = useState([]);
 
   const handlePromptChange = useCallback((e) => {
     setPrompt(e.target.value);
@@ -68,11 +64,6 @@ export function AiNFT({ signer, provider, nft }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const attributes = metadata.attributes.map(({ trait, value }) => ({
-      trait_type: trait,
-      value: value,
-    }));
-
     if (prompt === "") {
       window.alert("Please provide a prompt");
       return;
@@ -98,7 +89,7 @@ export function AiNFT({ signer, provider, nft }) {
       setIsWaiting(true);
       setMessage("Generating image. This can take a minute...");
     },
-    [createImage, prompt]
+    [prompt]
   );
 
   // On click upload image to IPFS and Mint
@@ -141,7 +132,7 @@ export function AiNFT({ signer, provider, nft }) {
     const data = response.data;
     const base64data = Buffer.from(data).toString("base64");
     const img = `data:${type};base64,` + base64data; // <-- This is so we can render it on the page
-    await setImage(img);
+    setImage(img);
     setIsWaiting(false);
     setMessage("");
   }
@@ -155,7 +146,7 @@ export function AiNFT({ signer, provider, nft }) {
     // Convert image to blob so it can be uploaded to IPFS
     const blob = await (await fetch(image)).blob();
     const imageHash = await nftstorage.storeBlob(blob);
-    console.log("Image Hash:", blob);
+    console.log("Image Hash:", imageHash);
 
     const attributes = metadata.attributes.map(({ trait, value }) => ({
       trait_type: trait,
@@ -289,14 +280,14 @@ export function AiNFT({ signer, provider, nft }) {
         <div className="image-wrapper">
           <div className="generated-image">
             {!isWaiting && image ? (
-              <img src={image} alt="AI Generated Image" />
+              <img src={image} alt="AI Generated" />
             ) : isWaiting ? (
               <div className="image-placeholder">
                 <Spinner animation="border" />
                 <p>{message}</p>
               </div>
             ) : !isWaiting ? (
-              <img src={profilePic} alt="NFT Genie Picture" />
+              <img src={profilePic} alt="NFT Genie" />
             ) : (
               <></>
             )}

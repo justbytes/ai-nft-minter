@@ -36,7 +36,7 @@ function App() {
       setProvider(provider);
       setSigner(signer);
 
-      const network = await provider.getNetwork();
+      await provider.getNetwork();
 
       const nft = new ethers.Contract(
         "0x5a5fe2dda9a68aec28f4204ade54f245106d0e11",
