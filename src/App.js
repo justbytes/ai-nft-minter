@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
 
 // Import pages
@@ -57,7 +57,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <Router>
       <Navigation account={account} setAccount={setAccount} />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -68,7 +68,7 @@ function App() {
         />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 }
 
