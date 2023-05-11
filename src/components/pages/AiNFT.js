@@ -76,7 +76,7 @@ export function AiNFT({ signer, provider, nft }) {
     setMessage("Minting your image please wait. This can take a minute...");
   };
 
-  const handlePromptSubmit = async (e) => (e) => {
+  const handlePromptSubmit = (e) => {
     e.preventDefault();
     if (prompt === "") {
       window.alert("Please provide a prompt");

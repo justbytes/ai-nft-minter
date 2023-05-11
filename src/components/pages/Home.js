@@ -108,7 +108,7 @@ export function Home() {
                   </a>{" "}
                   before using NFT Genie.
                 </Card.Text>
-                <Button type className="project-btn" href="#/aiNFT">
+                <Button type className="project-btn" href="/aiNFT">
                   Lets Go!
                 </Button>
               </Card.Body>
