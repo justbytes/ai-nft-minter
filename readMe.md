@@ -24,6 +24,10 @@ NFT Genie is a DApp that gives users the ability to create NFTs in minutes. This
 
 Currently NFT Genie is deployed to the Goerli Testnet address: 0x5A5fE2Dda9A68aEc28F4204AdE54f245106d0e11.
 
+## Link to Deployed DApp
+
+https://thunderous-truffle-69f5c3.netlify.app/
+
 ## Technologies Utilized
 
 -React
