@@ -23,7 +23,7 @@ export function Home() {
                 INTELLIGENCE, but more specifically it uses Stable Diffusion
                 text-to-image generator. After following the steps below you
                 will have minted your image into an NFT that is 100% yours for
-                FREE (expect for gas fees). Then head over to the NFT
+                FREE (except for gas fees). Then head over to the NFT
                 Marketplace{' '}
                 <a className="link" href="https://opensea.io/">
                   OpenSea
