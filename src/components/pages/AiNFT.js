@@ -1,36 +1,36 @@
-import React, { useCallback, useState } from "react";
-import axios from "axios";
-import { NFTStorage } from "nft.storage";
-import { Buffer } from "buffer";
+import React, { useCallback, useState } from 'react';
+import axios from 'axios';
+import { NFTStorage } from 'nft.storage';
+import { Buffer } from 'buffer';
 
 // Import react-bootstrap components
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Spinner from "react-bootstrap/Spinner";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner';
 
 // Import NFT Genie logo picture
-import profilePic from "../../images/genie.jpeg";
+import profilePic from '../../images/genie.jpeg';
 
 export function AiNFT({ signer, provider, nft }) {
   // Set State variables
-  const [prompt, setPrompt] = useState("");
-  const [image, setImage] = useState("");
+  const [prompt, setPrompt] = useState('');
+  const [image, setImage] = useState('');
   const [url, setURL] = useState(null);
   const [isWaiting, setIsWaiting] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [viewMetadata, setViewMetadata] = useState(false);
   // State attribute variables for nft metadata
 
   const [metadata, setMetadata] = useState({
-    name: "",
-    description: "",
+    name: '',
+    description: '',
     attributes: [
-      { trait: "", value: "" },
-      { trait: "", value: "" },
-      { trait: "", value: "" },
-      { trait: "", value: "" },
-      { trait: "", value: "" },
-      { trait: "", value: "" },
+      { trait: '', value: '' },
+      { trait: '', value: '' },
+      { trait: '', value: '' },
+      { trait: '', value: '' },
+      { trait: '', value: '' },
+      { trait: '', value: '' },
     ],
   });
 
@@ -64,8 +64,8 @@ export function AiNFT({ signer, provider, nft }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (prompt === "") {
-      window.alert("Please provide a prompt");
+    if (prompt === '') {
+      window.alert('Please provide a prompt');
       return;
     }
 
@@ -73,27 +73,27 @@ export function AiNFT({ signer, provider, nft }) {
     manageImage();
     // Set isWaiting to true to enable loading screen with bootstrap spinner
     setIsWaiting(true);
-    setMessage("Minting your image please wait. This can take a minute...");
+    setMessage('Minting your image please wait. This can take a minute...');
   };
 
   const handlePromptSubmit = (e) => {
     e.preventDefault();
-    if (prompt === "") {
-      window.alert("Please provide a prompt");
+    if (prompt === '') {
+      window.alert('Please provide a prompt');
       return;
     }
     // Start API call
     createImage();
     // Set isWaiting to true to enable loading screen with bootstrap spinner
     setIsWaiting(true);
-    setMessage("Generating image. This can take a minute...");
+    setMessage('Generating image. This can take a minute...');
   };
 
   // On click upload image to IPFS and Mint
   async function manageImage() {
     // Conditional ensuring image has been generated
-    if (image === null || image === "") {
-      window.alert("Generate an image before minting");
+    if (image === null || image === '') {
+      window.alert('Generate an image before minting');
       return;
     }
     // Begin NFTStorage API call
@@ -102,16 +102,16 @@ export function AiNFT({ signer, provider, nft }) {
 
   // Generate Stable diffusion AI image
   async function createImage() {
-    console.log("generating...");
+    console.log('generating...');
     const URL = `https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2`;
     // Send the request
     const response = await axios({
       url: URL,
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${process.env.REACT_APP_HUGGING_FACE_KEY}`,
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       //set options for stable diffusion
       data: JSON.stringify({
@@ -119,23 +119,23 @@ export function AiNFT({ signer, provider, nft }) {
         options: {
           wait_for_model: true,
           num_inference_steps: 25,
-          guidance_scale: 12,
+          guidance_scale: 10,
         },
       }),
-      responseType: "arraybuffer",
+      responseType: 'arraybuffer',
     });
 
-    const type = response.headers["content-type"];
+    const type = response.headers['content-type'];
     const data = response.data;
-    const base64data = Buffer.from(data).toString("base64");
+    const base64data = Buffer.from(data).toString('base64');
     const img = `data:${type};base64,` + base64data; // <-- This is so we can render it on the page
     setImage(img);
     setIsWaiting(false);
-    setMessage("");
+    setMessage('');
   }
 
   const uploadImage = async () => {
-    console.log("loading...");
+    console.log('loading...');
     // Create instance to NFT.Storage
     const nftstorage = new NFTStorage({
       token: process.env.REACT_APP_NFTSTORAGE,
@@ -143,7 +143,7 @@ export function AiNFT({ signer, provider, nft }) {
     // Convert image to blob so it can be uploaded to IPFS
     const blob = await (await fetch(image)).blob();
     const imageHash = await nftstorage.storeBlob(blob);
-    console.log("Image Hash:", imageHash);
+    console.log('Image Hash:', imageHash);
 
     const attributes = metadata.attributes.map(({ trait, value }) => ({
       trait_type: trait,
@@ -193,7 +193,7 @@ export function AiNFT({ signer, provider, nft }) {
                   onChange={handlePromptChange}
                 />
                 <Form.Text>
-                  What makes a good{" "}
+                  What makes a good{' '}
                   <a
                     className="link"
                     href="https://stable-diffusion-art.com/prompt-guide/"
@@ -222,19 +222,19 @@ export function AiNFT({ signer, provider, nft }) {
                 <Form.Text>
                   In this section you will name your NFT, give it a description,
                   and add 6 attributes! If you need some help with this part
-                  click{" "}
+                  click{' '}
                   <a
                     className="link"
                     href="https://docs.opensea.io/docs/metadata-standards"
                   >
                     HERE
-                  </a>{" "}
+                  </a>{' '}
                   to learn more.
                 </Form.Text>
                 <Form.Control
                   type="input"
                   placeholder="NFT Name"
-                  value={metadata.name || ""}
+                  value={metadata.name || ''}
                   onChange={handleNameChange}
                 />
                 <Form.Text>Give your NFT a name.</Form.Text>
@@ -244,7 +244,7 @@ export function AiNFT({ signer, provider, nft }) {
                   as="textarea"
                   rows={2}
                   placeholder="NFT Description"
-                  value={metadata.description || ""}
+                  value={metadata.description || ''}
                   onChange={handleDescriptionChange}
                 />
                 <Form.Text>
@@ -257,14 +257,14 @@ export function AiNFT({ signer, provider, nft }) {
                   <Form.Control
                     type="input"
                     placeholder="Trait Type"
-                    value={attribute.trait || ""}
-                    onChange={(e) => handleInputChange(e, index, "trait")}
+                    value={attribute.trait || ''}
+                    onChange={(e) => handleInputChange(e, index, 'trait')}
                   />
                   <Form.Control
                     type="input"
                     placeholder="Value"
-                    value={attribute.value || ""}
-                    onChange={(e) => handleInputChange(e, index, "value")}
+                    value={attribute.value || ''}
+                    onChange={(e) => handleInputChange(e, index, 'value')}
                   />
                 </div>
               ))}
@@ -291,7 +291,7 @@ export function AiNFT({ signer, provider, nft }) {
           </div>
           {viewMetadata && url ? (
             <p className="metadata-link">
-              View{" "}
+              View{' '}
               <a className="link" href={url}>
                 Metadata
               </a>
