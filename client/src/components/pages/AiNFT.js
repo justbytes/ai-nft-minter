@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import axios from 'axios';
-import { NFTStorage } from 'nft.storage';
-import { Buffer } from 'buffer';
+import fetch from 'node-fetch';
 
 // Import react-bootstrap components
 import Button from 'react-bootstrap/Button';
@@ -83,7 +81,7 @@ export function AiNFT({ signer, provider, nft }) {
       return;
     }
     // Start API call
-    createImage();
+    createImage(prompt);
     // Set isWaiting to true to enable loading screen with bootstrap spinner
     setIsWaiting(true);
     setMessage('Generating image. This can take a minute...');
@@ -101,77 +99,71 @@ export function AiNFT({ signer, provider, nft }) {
   }
 
   // Generate Stable diffusion AI image
-  async function createImage() {
+  async function createImage(prompt) {
     console.log('generating...');
-    const URL = `https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2`;
-    // Send the request
-    const response = await axios({
-      url: URL,
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_HUGGING_FACE_KEY}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      //set options for stable diffusion
-      data: JSON.stringify({
-        inputs: prompt,
-        options: {
-          wait_for_model: true,
-          num_inference_steps: 25,
-          guidance_scale: 10,
+    try {
+      const response = await fetch('/generate-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      }),
-      responseType: 'arraybuffer',
-    });
+        body: JSON.stringify({ prompt }),
+      });
 
-    const type = response.headers['content-type'];
-    const data = response.data;
-    const base64data = Buffer.from(data).toString('base64');
-    const img = `data:${type};base64,` + base64data; // <-- This is so we can render it on the page
-    setImage(img);
-    setIsWaiting(false);
-    setMessage('');
+      if (!response.ok) {
+        throw new Error(`Request failed with status code ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+      const imageUrl = result.output[0];
+
+      setImage(imageUrl);
+      setIsWaiting(false);
+      setMessage('');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const uploadImage = async () => {
     console.log('loading...');
-    // Create instance to NFT.Storage
-    const nftstorage = new NFTStorage({
-      token: process.env.REACT_APP_NFTSTORAGE,
-    });
-    // Convert image to blob so it can be uploaded to IPFS
-    const blob = await (await fetch(image)).blob();
-    const imageHash = await nftstorage.storeBlob(blob);
-    console.log('Image Hash:', imageHash);
+    try {
+      const response = await fetch('/upload-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image, metadata }),
+      });
 
-    const attributes = metadata.attributes.map(({ trait, value }) => ({
-      trait_type: trait,
-      value: value,
-    }));
-    const metadataObj = {
-      name: metadata.name,
-      description: metadata.description,
-      image: blob,
-      attributes: attributes,
-    };
-    // Create NFT metadata with name, description, image, and attributes
-    const { ipnft } = await nftstorage.store(metadataObj);
-    // Set new URL
-    const url = `https://ipfs.io/ipfs/${ipnft}/metadata.json`;
-    setURL(url);
-    console.log(url);
-    // Pass url to mint image function
-    mintImage(url);
-    // Display link to metadata
-    setViewMetadata(true);
+      if (!response.ok) {
+        throw new Error(`Request failed with status code ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+      const recievedURL = result.url;
+      setURL(recievedURL);
+      console.log(url);
+      mintImage(recievedURL);
+
+      // Display link to metadata
+      setViewMetadata(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Mint image/metadata into NFT
-  const mintImage = async (url) => {
+  const mintImage = async (recievedURL) => {
+    console.log(`mintImage url: ${recievedURL}`);
     const signer = await provider.getSigner();
+    console.log(`NFTAI.JS signer ${{ ...signer }}`);
     const nftWithSigner = nft.connect(signer);
-    const tx = await nftWithSigner.mint(url);
+    console.log(`NFTAI.js nftWithSigner ${{ ...nftWithSigner }}`);
+    const tx = await nftWithSigner.mint(recievedURL);
+    console.log(`NFTAI.js tx ${tx}`);
     await tx.wait();
     setIsWaiting(false);
     setImage(image);
@@ -206,7 +198,6 @@ export function AiNFT({ signer, provider, nft }) {
               <Button
                 variant="primary"
                 className="btn generate-btn"
-                // onClick={(e) => generateImage(e)}
                 type="submit"
               >
                 Generate Image

@@ -1,5 +1,4 @@
-// require("@nomicfoundation/hardhat-toolbox");
-require('./blockchain/node_modules/@nomicfoundation/hardhat-toolbox');
+require('@nomicfoundation/hardhat-toolbox');
 require('dotenv').config();
 
 module.exports = {
