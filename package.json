@@ -4,8 +4,10 @@
   "description": "AI NFT Minter",
   "main": "hardhat.config.js",
   "scripts": {
-    "start": "cd client && npm start",
-    "build": "cd client && npm build"
+    "install-all": "(cd blockchain && npm install) && (cd client && npm install) && (cd server && npm install)",
+    "start-server": "cd server && npm run start",
+    "start": "npm run install-all && npm run build && npm run start-server",
+    "build": "cd client && npm run build"
   },
   "keywords": [],
   "author": "",
