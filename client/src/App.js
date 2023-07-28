@@ -31,7 +31,6 @@ function App() {
   // Connect front end to blockchain
   const loadBlockchainData = async () => {
     if (typeof window.ethereum !== 'undefined') {
-      console.log(window.ethereum);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       setProvider(provider);
@@ -48,7 +47,7 @@ function App() {
 
       // Get first account in MetaMask
       const accounts = await provider.listAccounts();
-      console.log(`App.js accounts: ${accounts}`);
+
       setAccount(accounts[0]);
     } else {
       window.alert('Please connect Metamask wallet');
@@ -64,11 +63,11 @@ function App() {
         }
       }
     }
-    console.log('provider:');
+
     logObject(provider);
-    console.log('signer:');
+
     logObject(signer);
-    console.log('nft:');
+
     logObject(nft);
   };
 
