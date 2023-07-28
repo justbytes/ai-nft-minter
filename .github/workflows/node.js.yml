@@ -23,7 +23,8 @@ jobs:
           cache: 'npm'
       - run: |
           npm run install-all
-      - run: |
+      - name: Create .env file with PROD_ENV secret
+        run: |
           touch .env
           echo "${{ secrets.PROD_ENV }}" > .env
       - run: |
