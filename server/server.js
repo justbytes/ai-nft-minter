@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const https = 'https';
+const https = require('https');
 const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
 const { authMiddleware } = require('./utils/auth');
