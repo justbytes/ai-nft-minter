@@ -127,7 +127,6 @@ export function AiNFT({ signer, provider, nft }) {
   }
 
   const uploadImage = async () => {
-    console.log('loading...');
     try {
       const response = await fetch('/upload-image', {
         method: 'POST',
