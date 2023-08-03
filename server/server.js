@@ -22,8 +22,8 @@ app.get('*', (req, res) => {
 });
 
 const sslOptions = {
-  cert: fs.readFileSync('./certificate.crt'),
-  key: fs.readFileSync('./private.key'),
+  cert: fs.readFileSync('certificate.crt'),
+  key: fs.readFileSync('private.key'),
 };
 
 // Create a new instance of an Apollo server class with the GraphQL schema's typeDefs and resolvers as parameters
