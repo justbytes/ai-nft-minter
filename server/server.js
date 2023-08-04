@@ -12,17 +12,10 @@ const fs = require('fs');
 
 const app = express();
 
-const corsOptions = {
-  origin: 'https://thenftgenie.co',
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
-  credentials: true,
-};
-
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(router);
 
 app.get('*', (req, res) => {
