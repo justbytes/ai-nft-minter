@@ -25,9 +25,6 @@ jobs:
           npm run install-all
       - name: Create .env file
         run: |
-          echo "PROD_ENV=${{ secrets.PROD_ENV }}" > .env
-      - name: Load .env file
-        run: |
-          source .env
+          echo "PROD_ENV=${{ secrets.PROD_ENV }}" > server/.env
       - run: |
           npm run build
