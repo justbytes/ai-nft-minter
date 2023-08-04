@@ -14,14 +14,25 @@ jobs:
       matrix:
         node-version: [18.16.0]
 
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: |
-          npm run install-all
-      - run: |
-          npm run build
+        steps:
+          - uses: actions/checkout@v3
+          - name: Use Node.js ${{ matrix.node-version }}
+            uses: actions/setup-node@v3
+            with:
+              node-version: ${{ matrix.node-version }}
+              cache: 'npm'
+          - run: |
+              npm run install-all
+
+          # Step to create .env file and populate it with secrets
+          - name: Create .env file
+            run: |
+              echo "PROD_ENV=${{ secrets.PROD_ENV }}" > .env
+
+          # Step to load environment variables from .env file
+          - name: Load .env file
+            run: |
+              source .env
+
+          - run: |
+              npm run build

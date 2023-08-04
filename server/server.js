@@ -25,7 +25,6 @@ const sslOptions = {
   cert: fs.readFileSync(`/home/ubuntu/secure/certificate.crt`),
   key: fs.readFileSync(`/home/ubuntu/secure/private.key`),
 };
-console.log('update');
 // Create a new instance of an Apollo server class with the GraphQL schema's typeDefs and resolvers as parameters
 const startApolloServer = async (typeDefs, resolvers) => {
   const server = new ApolloServer({
