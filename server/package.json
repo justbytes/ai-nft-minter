@@ -16,13 +16,14 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^3.6.2",
-    "dotenv": "^16.3.1",
-    "jsonwebtoken": "^8.5.1",
     "bcrypt": "^4.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.2",
-    "mongoose": "^7.3.0",
     "ipfs-car": "^0.6.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^7.3.0",
     "nft.storage": "^7.0.0",
     "node-fetch": "^2.6.7"
   },
