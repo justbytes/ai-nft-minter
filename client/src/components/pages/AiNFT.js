@@ -101,6 +101,7 @@ export function AiNFT({ signer, provider, nft }) {
   // Generate Stable diffusion AI image
   async function createImage(prompt) {
     console.log('generating...');
+    console.log('testing');
     try {
       const response = await fetch('/api/generate-image', {
         method: 'POST',
