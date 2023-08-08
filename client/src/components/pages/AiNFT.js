@@ -102,7 +102,7 @@ export function AiNFT({ signer, provider, nft }) {
   async function createImage(prompt) {
     console.log('generating...');
     try {
-      const response = await fetch('api/generate-image', {
+      const response = await fetch('/generate-image', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
