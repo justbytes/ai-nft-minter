@@ -11,7 +11,7 @@ const fs = require('fs');
 
 const app = express();
 
-const production = false;
+const production = true;
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.urlencoded({ extended: true }));

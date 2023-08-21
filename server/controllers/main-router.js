@@ -7,8 +7,6 @@ const { NFTStorage, Blob } = require('nft.storage');
 router.post('/generate-image', async (req, res) => {
   const { prompt } = req.body;
 
-  console.log(prompt);
-
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
 
@@ -42,12 +40,13 @@ router.post('/generate-image', async (req, res) => {
   fetch('https://stablediffusionapi.com/api/v3/text2img', requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      // Send the result as the response to the front end
       console.log(result);
 
-      if (result.status === 'processing') {
+      if (result.status == 'processing') {
+        console.log('image is still processing please wait...');
         const etaInSeconds = result.eta;
         const delayInMilliseconds = etaInSeconds * 1000;
+        console.log(delayInMilliseconds);
 
         setTimeout(() => {
           var myHeaders = new Headers();
@@ -71,14 +70,14 @@ router.post('/generate-image', async (req, res) => {
           )
             .then((response) => response.text())
             .then((result) => res.json(result))
-            .catch((error) => console.log('error', error));
+            .catch((error) => console.error('error', error));
         }, delayInMilliseconds);
       } else {
         res.json(result);
       }
     })
     .catch((error) => {
-      console.log('error', error);
+      console.error('error', error);
       // Handle the error and send an appropriate response to the front end
       res.status(500).json({
         error: 'An error occurred with the stable diffusion api call',
@@ -107,9 +106,7 @@ router.post('/upload-image', async (req, res) => {
       token: process.env.NFTSTORAGE_KEY,
     });
 
-    console.log('BLOB:', blob);
     const imageHash = await client.storeBlob(blob);
-    console.log('Image Hash:', imageHash);
 
     const attributes = [];
     for (let i = 0; i < metadata.attributes.length; i++) {
@@ -121,7 +118,6 @@ router.post('/upload-image', async (req, res) => {
     }
 
     const modifiedBlob = new Blob([blob], { type: 'image/png' });
-    console.log('Modified Blob:', modifiedBlob);
 
     const nft = {
       name: name,
@@ -134,13 +130,15 @@ router.post('/upload-image', async (req, res) => {
 
     const meta = await client.store(nft);
 
-    const myNFTUrl = `https://ipfs.io/ipfs/${meta.ipnft}/metadata.json`;
-    console.log('My NFT URL:', myNFTUrl);
+    const nftUrl = `https://ipfs.io/ipfs/${meta.ipnft}/metadata.json`;
+    console.log('NFT URL:', nftUrl);
 
     // Set the URL to your front end
-    res.json({ url: myNFTUrl });
+    res.json({ url: nftUrl });
   } catch (error) {
-    console.error(error);
+    console.error(
+      `There was an error uploading metadata to ipfs. ERROR: ${error}`
+    );
   }
 });
 

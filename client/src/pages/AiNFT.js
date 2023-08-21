@@ -9,7 +9,7 @@ import Spinner from 'react-bootstrap/Spinner';
 // Import NFT Genie logo picture
 import profilePic from '../images/genie.jpeg';
 
-export function AiNFT({ signer, provider, nft }) {
+export function AiNFT({ signer, provider, nftContract }) {
   // Intial values of the metadata fields
   const initialMetadata = {
     name: '',
@@ -89,7 +89,6 @@ export function AiNFT({ signer, provider, nft }) {
       }
 
       const result = await response.json();
-      console.log(result);
       const imageUrl = result.output[0];
 
       setImage(imageUrl);
@@ -111,6 +110,7 @@ export function AiNFT({ signer, provider, nft }) {
     }
     // Upload Metadata and mint nft
     try {
+      let nftHash;
       // Set loading screen while users image is being minted
       setIsWaiting(true);
       setMessage('Minting your image please wait. This can take a minute...');
@@ -132,7 +132,8 @@ export function AiNFT({ signer, provider, nft }) {
         }
 
         const result = await response.json();
-        setURL(result.url);
+        nftHash = result.url;
+        setURL(nftHash);
         // Display link to metadata
         setViewMetadata(true);
       } catch (error) {
@@ -143,9 +144,9 @@ export function AiNFT({ signer, provider, nft }) {
 
       // Mint NFT
       try {
-        const signer = await provider.getSigner();
-        const nftWithSigner = nft.connect(signer);
-        const tx = await nftWithSigner.mint(url);
+        const nftSigner = await provider.getSigner();
+        const nftWithSigner = await nftContract.connect(nftSigner);
+        const tx = await nftWithSigner.mint(nftHash);
         await tx.wait();
       } catch (error) {
         console.error(`There was an error minting the NFT. ERROR ${error}`);
