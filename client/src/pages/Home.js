@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 //Import NFT Genie logo image
-import profilePic from '../../images/genie.jpeg';
+import profilePic from '../images/genie.jpeg';
 
 export function Home() {
   return (

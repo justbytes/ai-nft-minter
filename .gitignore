@@ -12,6 +12,7 @@
 
 
 # misc
+OLDCODE.js
 .DS_Store
 .env
 .env.local
