@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
 
-// Import React components
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import {
+  NavMenu,
+  NavbarContainer,
+  NavbarWrapper,
+  NavLink,
+  NavDropdownWrapper,
+  NavDropdownContent,
+  NavDropdownItem,
+  NavDropDownName,
+} from './StyledComponents/Navigations';
+import { ConnectButton, ConnectedButton } from './StyledComponents/Buttons';
 
 export function Navigation({ account, setAccount }) {
-  //Set state variable
   const [showDropdown, setShowDropdown] = useState(false);
 
   // Connect to MetaMask wallet
@@ -21,52 +26,56 @@ export function Navigation({ account, setAccount }) {
   };
 
   return (
-    <Navbar className="navbar-container" expand="lg">
-      <Container fluid>
-        <Nav className="me-auto navbar justify-content-start">
-          <Nav.Link href="#/home">NFT Genie</Nav.Link>
-          <Nav.Link href="#/aiNFT">Make a NFT</Nav.Link>
-          <NavDropdown
-            className="nav-dropdown"
-            title="Resources"
-            id="basic-nav-dropdown"
-            show={showDropdown}
-            onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={() => setShowDropdown(false)}
-          >
-            <NavDropdown.Item href="https://medium.com/bankless-dao/how-to-set-up-a-metamask-wallet-a2cc255bafe2">
-              MetaMask Wallet Guide
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="https://stable-diffusion-art.com/prompt-guide/">
-              Prompt Guide
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="https://opensea.io/">
-              View collection on OpenSea
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="https://goerli.etherscan.io/address/0x5a5fe2dda9a68aec28f4204ade54f245106d0e11">
-              View Contract
-            </NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
-        <Nav className="ml-auto">
+    <NavbarWrapper>
+      <NavbarContainer>
+        <NavMenu>
+          <NavLink href="/">NFT Genie</NavLink>
+          <NavLink href="/CreateNft">Make a NFT</NavLink>
+          <NavDropdownWrapper $color="white">
+            <NavDropDownName
+              onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
+            >
+              Resources
+            </NavDropDownName>
+            <NavDropdownContent
+              className={
+                showDropdown
+                  ? 'nav-dropdown-content show'
+                  : 'nav-dropdown-content'
+              }
+            >
+              <NavDropdownItem href="https://medium.com/bankless-dao/how-to-set-up-a-metamask-wallet-a2cc255bafe2">
+                MetaMask Wallet Guide
+              </NavDropdownItem>
+              <NavDropdownItem href="https://stable-diffusion-art.com/prompt-guide/">
+                Prompt Guide
+              </NavDropdownItem>
+              <NavDropdownItem href="https://opensea.io/">
+                View collection on OpenSea
+              </NavDropdownItem>
+              <NavDropdownItem href="https://goerli.etherscan.io/address/0x5a5fe2dda9a68aec28f4204ade54f245106d0e11">
+                View Contract
+              </NavDropdownItem>
+            </NavDropdownContent>
+          </NavDropdownWrapper>
+        </NavMenu>
+        <NavMenu className="ml-auto">
           {account ? (
-            <button type="button" className="connect-wallet">
+            <ConnectedButton $padding="7px" type="button">
               {account.slice(0, 6) + '...' + account.slice(38, 42)}
-            </button>
+            </ConnectedButton>
           ) : (
-            <button
+            <ConnectButton
               type="button"
               className="connect-wallet"
               onClick={handleConnectWallet}
             >
               Connect
-            </button>
+            </ConnectButton>
           )}
-        </Nav>
-      </Container>
-    </Navbar>
+        </NavMenu>
+      </NavbarContainer>
+    </NavbarWrapper>
   );
 }

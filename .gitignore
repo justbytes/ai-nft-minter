@@ -13,6 +13,7 @@
 
 # misc
 OLDCODE.js
+OLDCSS.css
 .DS_Store
 .env
 .env.local

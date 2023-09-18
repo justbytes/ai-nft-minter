@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
 // Contract ABI
-import ABI from '../../abi/NFT.json';
+import ABI from './abi/NFT.json';
 
 export function BlockchainData() {
   const [account, setAccount] = useState('');
   const [provider, setProvider] = useState('');
-  const [signer, setSigner] = useState('');
   const [nftContract, setNftContract] = useState('');
 
   useEffect(() => {
@@ -16,7 +15,6 @@ export function BlockchainData() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         setProvider(provider);
-        setSigner(signer);
 
         await provider.getNetwork();
 
@@ -37,5 +35,5 @@ export function BlockchainData() {
     loadBlockchainData();
   }, []);
 
-  return { account, setAccount, provider, signer, nftContract };
+  return { account, setAccount, provider, nftContract };
 }
