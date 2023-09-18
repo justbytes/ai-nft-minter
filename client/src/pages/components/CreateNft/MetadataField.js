@@ -30,7 +30,7 @@ const MetadataField = ({ provider, nftContract }) => {
       { trait: '', value: '' },
     ],
   };
-  const { waiting, setWaiting } = useContext(WaitingContext);
+  const { setWaiting } = useContext(WaitingContext);
   const { image, setImage } = useContext(ImageContext);
   const { setMetadataHash } = useContext(MetadataHashContext);
   const [metadata, setMetadata] = useState(initialMetadata);

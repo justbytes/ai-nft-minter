@@ -10,7 +10,7 @@ import { StyledLink } from '../StyledComponents/Links';
 import { Button } from '../StyledComponents/Buttons';
 
 const PromptField = () => {
-  const { waiting, setWaiting } = useContext(WaitingContext);
+  const { setWaiting } = useContext(WaitingContext);
   const { setImage } = useContext(ImageContext);
   const [prompt, setPrompt] = useState('');
 
