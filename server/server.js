@@ -27,8 +27,8 @@ app.get('*', (req, res) => {
 
 if (production) {
   const sslOptions = {
-    cert: fs.readFileSync(`/home/ubuntu/secure/certificate.crt`),
-    key: fs.readFileSync(`/home/ubuntu/secure/private.key`),
+    cert: fs.readFileSync(`${process.env.CERT}`),
+    key: fs.readFileSync(`${process.env.KEY}`),
   };
   const startApolloServer = async (typeDefs, resolvers) => {
     const server = new ApolloServer({
