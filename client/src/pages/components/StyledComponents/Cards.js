@@ -38,7 +38,15 @@ export const CardBody = styled(Body)`
 `;
 
 export const BottomBorderCardBody = styled(Body)`
+  padding: ${(props) => props.$padding};
   border-bottom: solid 1px black;
+`;
+
+export const FlexCardBody = styled(Body)`
+  padding: ${(props) => props.$padding};
+  margin: ${(props) => props.$margin};
+  display: flex;
+  justify-content: space-evenly;
 `;
 
 export const CardFooter = styled.div`
@@ -55,6 +63,12 @@ export const CardFooter = styled.div`
 export const CardTitle = styled.h1``;
 
 export const CardTitle3 = styled.h3`
+  text-align: center;
+  border-bottom: 1px solid black;
+  padding: ${(props) => props.$padding};
+`;
+
+export const CardTitle6 = styled.h6`
   text-align: center;
   border-bottom: 1px solid black;
   padding: ${(props) => props.$padding};

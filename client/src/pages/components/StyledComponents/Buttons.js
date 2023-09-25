@@ -2,8 +2,14 @@ import styled from 'styled-components';
 
 export const Button = styled.button`
   border: 1px solid black;
+  border-radius: 5px;
   width: ${(props) => props.$width};
   padding: ${(props) => props.$padding};
+`;
+
+export const BorderlessButton = styled.button`
+  border: none;
+  color: ${(props) => props.$color};
 `;
 
 export const ConnectButton = styled.button`

@@ -13,6 +13,7 @@ export const CenteredSection = styled.section`
   background-color: ${(props) => (props.$secondary ? '#E5E5E5' : '#FFFFFF')};
   min-height: 100vh;
   border-bottom: 1px solid black;
+  flex-direction: column;
 `;
 
 export const EvenSection = styled.section`

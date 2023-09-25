@@ -8,10 +8,10 @@ const { typeDefs, resolvers } = require('./schemas');
 const router = require('./controllers');
 const cors = require('cors');
 const fs = require('fs');
+const db = require('./config/connection');
 
 const app = express();
-
-const production = true;
+const PORT = process.env.PORT;
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.urlencoded({ extended: true }));
@@ -24,57 +24,46 @@ app.get('*', (req, res) => {
 });
 
 // Create a new instance of an Apollo server class with the GraphQL schema's typeDefs and resolvers as parameters
+const startApolloServer = async () => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: authMiddleware,
+  });
 
-if (production) {
-  const sslOptions = {
-    cert: fs.readFileSync(`${process.env.CERT}`),
-    key: fs.readFileSync(`${process.env.KEY}`),
-  };
-  const startApolloServer = async (typeDefs, resolvers) => {
-    const server = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: authMiddleware,
-    });
+  await server.start();
 
-    await server.start();
-    // connect express app with apollo middleware
-    server.applyMiddleware({ app });
+  // Connect Apollo Server to the Express app
+  server.applyMiddleware({ app });
 
+  if (process.env.NODE_ENV === 'production') {
+    const sslOptions = {
+      cert: fs.readFileSync(`${process.env.CERT}`),
+      key: fs.readFileSync(`${process.env.KEY}`),
+    };
     const httpsServer = https.createServer(sslOptions, app);
 
     // Start the HTTPS server on port 443
-    httpsServer.listen(PORT, () => {
-      console.log('Express server running on HTTPS port 443');
-      console.log(
-        `Use GraphQL at https://www.thenftgenie.co${server.graphqlPath}`
-      );
+    db.once('open', () => {
+      httpsServer.listen(443, () => {
+        console.log('Express server running on HTTPS port 443');
+        console.log(
+          `Use GraphQL at https://www.thenftgenie.co${server.graphqlPath}`
+        );
+      });
     });
-  };
-  // Start Apollo Server
-  startApolloServer(typeDefs, resolvers);
-} else {
-  const startApolloServer = async (typeDefs, resolvers) => {
-    const server = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: authMiddleware,
-    });
-
-    await server.start();
-
-    // Connect Apollo Server to the Express app
-    server.applyMiddleware({ app });
-
+  } else {
     // Start the Express app, which includes Apollo Server middleware
-    const port = 3001;
-    app.listen(port, () => {
-      console.log(`Express server running on port ${port}`);
-      console.log(
-        `Use GraphQL at http://localhost:${port}${server.graphqlPath}`
-      );
+    db.once('open', () => {
+      app.listen(PORT, () => {
+        console.log(`API server running on port ${PORT}!`);
+        console.log(
+          `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
+        );
+      });
     });
-  };
-  // Start Apollo Server
-  startApolloServer(typeDefs, resolvers);
-}
+  }
+};
+
+// Start Apollo Server
+startApolloServer();

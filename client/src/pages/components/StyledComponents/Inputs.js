@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Input = styled.input`
   margin: ${(props) => props.$margin};
   padding: 2px;
-  width: 100%;
+  width: ${(props) => props.$width || '100%'};
   border-radius: 5px;
   border: 1px solid black;
 `;

@@ -27,8 +27,7 @@ module.exports = {
     } catch {
       console.log('Invalid token');
     }
-    return req; // request object is passed as 'context' argument to resolvers
-    // removed next() since we are not using restful api endpoints anymore
+    return req;
   },
   signToken: function ({ username, email, _id }) {
     const payload = { username, email, _id };

@@ -1,13 +1,19 @@
-import { CenteredParagragh } from './components/StyledComponents/Paragraphs';
+import React, { useState } from 'react';
+
 import { CenteredSection } from './components/StyledComponents/Sections';
+import LoginUser from './components/LoginSignup/LoginUser';
+import CreateUser from './components/LoginSignup/CreateUser';
 
 export function Login() {
+  const [signup, setSignup] = useState(false);
+
+  const changeScreen = () => {
+    setSignup(true);
+  };
+
   return (
     <CenteredSection>
-      <h1>Coming Soon!</h1>
-      <CenteredParagragh>
-        As of right now you can use NFT Genie without signing up!
-      </CenteredParagragh>
+      {!signup ? <LoginUser changeScreen={changeScreen} /> : <CreateUser />}
     </CenteredSection>
   );
 }

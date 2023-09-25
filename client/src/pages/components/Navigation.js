@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { ethers } from 'ethers';
+
+import Auth from '../../utils/auth';
+
+import LoggedInContext from '../../LoggedInProvider';
 
 import {
   NavMenu,
@@ -15,6 +19,7 @@ import { ConnectButton, ConnectedButton } from './StyledComponents/Buttons';
 
 export function Navigation({ account, setAccount }) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const { loggedIn } = useContext(LoggedInContext);
 
   // Connect to MetaMask wallet
   const handleConnectWallet = async () => {
@@ -61,18 +66,26 @@ export function Navigation({ account, setAccount }) {
           </NavDropdownWrapper>
         </NavMenu>
         <NavMenu className="ml-auto">
-          {account ? (
-            <ConnectedButton $padding="7px" type="button">
-              {account.slice(0, 6) + '...' + account.slice(38, 42)}
-            </ConnectedButton>
+          {!loggedIn ? (
+            <NavLink href="/login">Login</NavLink>
+          ) : account ? (
+            <>
+              <NavLink onClick={Auth.logout}>Logout</NavLink>
+              <ConnectedButton $padding="7px" type="button">
+                {account.slice(0, 6) + '...' + account.slice(38, 42)}
+              </ConnectedButton>
+            </>
           ) : (
-            <ConnectButton
-              type="button"
-              className="connect-wallet"
-              onClick={handleConnectWallet}
-            >
-              Connect
-            </ConnectButton>
+            <>
+              <NavLink onClick={Auth.logout}>Logout</NavLink>
+              <ConnectButton
+                type="button"
+                className="connect-wallet"
+                onClick={handleConnectWallet}
+              >
+                Connect
+              </ConnectButton>
+            </>
           )}
         </NavMenu>
       </NavbarContainer>
