@@ -10,7 +10,7 @@ export function LoggedInProvider({ children }) {
   useEffect(() => {
     const status = Auth.loggedIn();
     setLoggedIn(status);
-  });
+  }, []);
 
   return (
     <LoggedInContext.Provider value={{ loggedIn, setLoggedIn }}>
