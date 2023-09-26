@@ -21,7 +21,7 @@ import { Login } from './pages/Login';
 import { BlockchainData } from './BlockchainData';
 
 const httpLink = createHttpLink({
-  uri: 'https://thenftgenie.co/graphql',
+  uri: '/graphql',
 });
 
 // setting the token in the client req headers
