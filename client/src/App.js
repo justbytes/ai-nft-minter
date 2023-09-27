@@ -9,8 +9,6 @@ import {
 
 import { setContext } from '@apollo/client/link/context';
 
-import { onError } from '@apollo/client/link/error';
-
 import { LoggedInProvider } from './LoggedInProvider';
 
 // Import pages
@@ -25,9 +23,9 @@ import { BlockchainData } from './BlockchainData';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
+  credentials: 'same-origin',
 });
 
-// setting the token in the client req headers
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('id_token');
@@ -43,17 +41,6 @@ const authLink = setContext((_, { headers }) => {
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-});
-// eslint-disable-next-line
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-    );
-
-  if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
 function App() {
