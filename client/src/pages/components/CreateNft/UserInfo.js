@@ -17,15 +17,10 @@ import { ButtonLink } from '../StyledComponents/Links';
 const UserInfo = () => {
   const [user, setUser] = useState({});
   const { loggedIn } = useContext(LoggedInContext);
-  const token = localStorage.getItem('id_token');
 
   // Use the token to set up an Apollo Client context
   const { loading, error, data } = useQuery(USER_INFO, {
-    context: {
-      headers: {
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    },
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {
