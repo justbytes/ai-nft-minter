@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   ApolloProvider,
   ApolloClient,
-  HttpLink,
-  ApolloLink,
+  createHttpLink,
   InMemoryCache,
-  concat,
 } from '@apollo/client';
+
+import { setContext } from '@apollo/client/link/context';
 
 import { onError } from '@apollo/client/link/error';
 
@@ -23,27 +23,26 @@ import { Login } from './pages/Login';
 // Load blockchain data
 import { BlockchainData } from './BlockchainData';
 
-const httpLink = HttpLink({
+const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
+// setting the token in the client req headers
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
   const token = localStorage.getItem('id_token');
-
-  operation.setContext(({ headers = {} }) => ({
+  // return the headers to the context so httpLink can read them
+  return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : '',
     },
-  }));
-
-  return forward(operation);
+  };
 });
 
 const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  link: concat(authMiddleware, httpLink),
 });
 // eslint-disable-next-line
 const errorLink = onError(({ graphQLErrors, networkError }) => {
