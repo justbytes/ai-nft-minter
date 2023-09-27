@@ -8,6 +8,7 @@ import {
   InMemoryCache,
   concat,
 } from '@apollo/client';
+import { setContext } from "@apollo/client/link/context"
 import { onError } from '@apollo/client/link/error';
 
 import { LoggedInProvider } from './LoggedInProvider';
@@ -28,10 +29,12 @@ const httpLink = HttpLink({
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
+  const token = localStorage.getItem("id_token");
+
   operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
-      authorization: localStorage.getItem('id_token') || null,
+      authorization: token ? `Bearer ${token} : ""`,
     },
   }));
 
