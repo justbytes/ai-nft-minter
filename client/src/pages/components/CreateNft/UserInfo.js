@@ -17,20 +17,25 @@ import { ButtonLink } from '../StyledComponents/Links';
 const UserInfo = () => {
   const [user, setUser] = useState({});
   const { loggedIn } = useContext(LoggedInContext);
-
+  const userDataLength = Object.keys(user).length;
   const { loading, error, data } = useQuery(USER_INFO);
 
   useEffect(() => {
-    if (loading) {
-      console.log('Loading...');
-    } else if (error) {
+    try {
+      if (loading) {
+        console.log('loading..');
+      }
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        // console.log("get me query:", data.me);
+        setUser(data?.me);
+      }
+    } catch (error) {
       console.error(error);
-      console.log(error);
-    } else {
-      const user = data?.me;
-      setUser(user);
     }
-  }, [loading, error, data]);
+  }, [data, error, loading, userDataLength]);
 
   return !loggedIn ? (
     <Card $secondary $width="27%" $margin="10px" $padding="5px">
