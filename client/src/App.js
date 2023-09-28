@@ -43,6 +43,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+console.log('createHttpLink', httpLink);
+console.log('authLink', authLink);
+console.log('client', client);
+
 function App() {
   const { account, setAccount, provider, nftContract } = BlockchainData();
 

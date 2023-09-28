@@ -18,16 +18,14 @@ const UserInfo = () => {
   const [user, setUser] = useState({});
   const { loggedIn } = useContext(LoggedInContext);
 
-  // Use the token to set up an Apollo Client context
-  const { loading, error, data } = useQuery(USER_INFO, {
-    fetchPolicy: 'network-only',
-  });
+  const { loading, error, data } = useQuery(USER_INFO);
 
   useEffect(() => {
     if (loading) {
       console.log('Loading...');
     } else if (error) {
       console.error(error);
+      console.log(error);
     } else {
       const user = data?.me;
       setUser(user);
