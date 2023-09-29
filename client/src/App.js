@@ -17,7 +17,7 @@ import { BlockchainData } from './BlockchainData';
 const token = localStorage.getItem('id_token');
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql',
+  uri: 'graphql',
   cache: new InMemoryCache(),
   headers: {
     authorization: token ? `Bearer ${token}` : '',
