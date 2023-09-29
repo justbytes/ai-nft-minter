@@ -37,16 +37,37 @@ const startApolloServer = async () => {
 
   await server.start();
 
+  // Connect Apollo Server to the Express app
   server.applyMiddleware({ app });
 
-  db.once('open', () => {
-    app.listen(PORT, () => {
-      console.log(`API server running on port ${PORT}!`);
-      console.log(
-        `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
-      );
+  if (process.env.ENV === 'production') {
+    const sslOptions = {
+      cert: fs.readFileSync(`${process.env.CERT}`),
+      key: fs.readFileSync(`${process.env.KEY}`),
+    };
+    const httpsServer = https.createServer(sslOptions, app);
+
+    // Start the HTTPS server on port 443
+    db.once('open', () => {
+      httpsServer.listen(443, () => {
+        console.log('Express server running on HTTPS port 443');
+        console.log(
+          `Use GraphQL at https://www.thenftgenie.co${server.graphqlPath}`
+        );
+      });
     });
-  });
+  } else {
+    // Start the Express app, which includes Apollo Server middleware
+    db.once('open', () => {
+      app.listen(PORT, () => {
+        console.log(`API server running on port ${PORT}!`);
+        console.log(
+          `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
+        );
+      });
+    });
+  }
 };
 
+// Start Apollo Server
 startApolloServer();
