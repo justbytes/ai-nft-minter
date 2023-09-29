@@ -1,13 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {
-  ApolloProvider,
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-} from '@apollo/client';
-
-import { setContext } from '@apollo/client/link/context';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 import { LoggedInProvider } from './LoggedInProvider';
 
@@ -21,30 +14,16 @@ import { Login } from './pages/Login';
 // Load blockchain data
 import { BlockchainData } from './BlockchainData';
 
-const httpLink = createHttpLink({
-  uri: '/graphql',
-  credentials: 'same-origin',
-});
-
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('id_token');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  };
-});
+const token = localStorage.getItem('id_token');
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  uri: '/graphql',
   cache: new InMemoryCache(),
+  headers: {
+    authorization: token ? `Bearer ${token}` : '',
+  },
 });
 
-console.log('createHttpLink', httpLink);
-console.log('authLink', authLink);
 console.log('client', client);
 
 function App() {

@@ -14,8 +14,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 const corsOptions = {
-  origin: 'thenftgenie.co',
-  credentials: true,
+  origin: 'https://thenftgenie.co',
 };
 
 app.use(express.static(path.join(__dirname, '../client/build')));
