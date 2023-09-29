@@ -13,14 +13,14 @@ const db = require('./config/connection');
 const app = express();
 const PORT = process.env.PORT;
 
-const corsOptions = {
-  origin: 'https://thenftgenie.co',
-};
+// const corsOptions = {
+//   origin: 'https://thenftgenie.co',
+// };
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(router);
 
 app.get('*', (req, res) => {
