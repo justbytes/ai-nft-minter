@@ -24,10 +24,6 @@ app.use(express.json());
 app.use(cors());
 app.use(router);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
-
 // Create a new instance of an Apollo server class with the GraphQL schema's typeDefs and resolvers as parameters
 const startApolloServer = async () => {
   const server = new ApolloServer({
@@ -69,6 +65,10 @@ const startApolloServer = async () => {
     });
   }
 };
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
 // Start Apollo Server
 startApolloServer();
