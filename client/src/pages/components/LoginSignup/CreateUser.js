@@ -43,7 +43,7 @@ const CreateUser = () => {
 
       Auth.login(data.addUser.token);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       alert('Failed to create new user, please try again.');
     }
   };

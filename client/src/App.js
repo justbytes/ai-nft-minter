@@ -24,8 +24,6 @@ const client = new ApolloClient({
   },
 });
 
-console.log('client', client);
-
 function App() {
   const { account, setAccount, provider, nftContract } = BlockchainData();
 
