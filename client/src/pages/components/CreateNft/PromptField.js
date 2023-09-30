@@ -32,7 +32,7 @@ const PromptField = () => {
       // Setting the loading screen while image is being generated
       setWaiting(true);
 
-      const response = await fetch('/api/generate-image', {
+      const response = await fetch('/generate-image', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
