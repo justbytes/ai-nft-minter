@@ -46,7 +46,7 @@ const startApolloServer = async () => {
 
     // Start the HTTPS server on port 443
     db.once('open', () => {
-      httpsServer.listen(443, () => {
+      httpsServer.listen(PORT, () => {
         console.log('Express server running on HTTPS port 443');
         console.log(
           `Use GraphQL at https://www.thenftgenie.co${server.graphqlPath}`
