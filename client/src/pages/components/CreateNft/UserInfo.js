@@ -45,7 +45,7 @@ const UserInfo = ({ user }) => {
             title="Images Generated"
             content={user?.images_generated}
           />
-          <ActivityBox title="Images Minted" content={user?.nfts_minted} />
+          <ActivityBox title="NFTs Minted" content={user?.nfts_minted} />
         </FlexCardBody>
         <FlexCardBody $padding="5px" $margin="10px">
           <CenteredParagragh>Recent Images</CenteredParagragh>

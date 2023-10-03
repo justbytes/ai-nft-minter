@@ -129,7 +129,7 @@ const MetadataField = ({ user, setUser, provider, nftContract }) => {
       );
     } finally {
       setWaiting(false);
-
+      setMetadata(initialMetadata);
       setImage(image);
     }
   };
