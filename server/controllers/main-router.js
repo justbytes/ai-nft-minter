@@ -1,11 +1,12 @@
 require('dotenv').config();
+const { User } = require('../models');
 
 const router = require('express').Router();
 const fetch = require('node-fetch');
 const { NFTStorage, Blob } = require('nft.storage');
 
 router.post('/generate-image', async (req, res) => {
-  const { prompt } = req.body;
+  const { prompt, userId } = req.body;
 
   var myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
@@ -39,7 +40,7 @@ router.post('/generate-image', async (req, res) => {
 
   fetch('https://stablediffusionapi.com/api/v3/text2img', requestOptions)
     .then((response) => response.json())
-    .then((result) => {
+    .then(async (result) => {
       console.log(result);
 
       if (result.status == 'processing') {
@@ -73,7 +74,15 @@ router.post('/generate-image', async (req, res) => {
             .catch((error) => console.error('error', error));
         }, delayInMilliseconds);
       } else {
-        res.json(result);
+        const increment = async (id) => {
+          const user = await User.findById(id);
+          console.log('user', user);
+          await user.incrementImageCount();
+          const img_gen = user.images_generated;
+          return img_gen;
+        };
+        const count = await increment(userId);
+        res.json({ result, count });
       }
     })
     .catch((error) => {
@@ -138,6 +147,22 @@ router.post('/upload-image', async (req, res) => {
   } catch (error) {
     console.error(
       `There was an error uploading metadata to ipfs. ERROR: ${error}`
+    );
+  }
+});
+
+router.post('/nft-count', async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId);
+    console.log('user', user);
+    await user.incrementNftCount();
+    const count = user.nfts_minted;
+    res.json({ count });
+  } catch (error) {
+    console.log(
+      'There was a problem updating the nft count for the user:',
+      error
     );
   }
 });

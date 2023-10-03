@@ -7,6 +7,8 @@ const typeDefs = gql`
     lastname: String!
     username: String!
     email: String!
+    images_generated: Int
+    nfts_minted: Int
   }
 
   type Auth {

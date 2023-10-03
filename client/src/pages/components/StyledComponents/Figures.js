@@ -4,7 +4,7 @@ export const Figure = styled.figure`
   width: ${(props) => props.$width};
   height: ${(props) => props.$height};
   border: 1px solid black;
-  border-radius: 10px;
+  border-radius: 5px;
 `;
 
 const Image = ({ className, width, height, alt, src }) => {
@@ -20,7 +20,5 @@ const Image = ({ className, width, height, alt, src }) => {
 };
 
 export const StyledImage = styled(Image)`
-  border-radius: 10px;
+  border-radius: 5px;
 `;
-
-export const BasicImage = styled(Image)``;

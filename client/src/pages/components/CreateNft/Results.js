@@ -7,7 +7,7 @@ import MetadataHashContext from './ContentProviders/MetadataProvider';
 // Import NFT Genie logo picture
 import Genie from '../../../images/genie.jpeg';
 
-import { Figure, StyledImage, BasicImage } from '../StyledComponents/Figures';
+import { Figure, StyledImage } from '../StyledComponents/Figures';
 import { Card } from '../StyledComponents/Cards';
 import { CenteredParagragh } from '../StyledComponents/Paragraphs';
 import { StyledLink } from '../StyledComponents/Links';
@@ -21,7 +21,7 @@ const Results = () => {
     <Card $width="30%" $margin="10px" $padding="5px">
       {!waiting && image ? (
         <Figure>
-          <BasicImage src={image} alt="AI Generated" />
+          <StyledImage width="100%" src={image} alt="AI Generated" />
         </Figure>
       ) : waiting ? (
         <Figure>

@@ -37,6 +37,16 @@ export const CardBody = styled(Body)`
   padding: ${(props) => props.$padding};
 `;
 
+export const BorderedCardBody = styled(Body)`
+  border: 1px solid #80808052;
+  border-radius: 3px;
+  padding: ${(props) => props.$padding};
+  margin: ${(props) => props.$margin};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 export const BottomBorderCardBody = styled(Body)`
   padding: ${(props) => props.$padding};
   border-bottom: solid 1px black;
@@ -60,11 +70,26 @@ export const CardFooter = styled.div`
   margin-top: 15px;
 `;
 
+export const Box = styled.div`
+  padding: ${(props) => props.$padding};
+  margin: ${(props) => props.$margin};
+  width: ${(props) => props.$width};
+  border: solid 1px grey;
+  display: flex;
+  justify-content: center;
+`;
+
 export const CardTitle = styled.h1``;
 
 export const CardTitle3 = styled.h3`
   text-align: center;
   border-bottom: 1px solid black;
+  padding: ${(props) => props.$padding};
+`;
+
+export const CardTitle4 = styled.h4`
+  color: ${(props) => props.$color};
+  margin: ${(props) => props.$margin};
   padding: ${(props) => props.$padding};
 `;
 

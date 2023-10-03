@@ -9,7 +9,7 @@ import { CenteredParagragh } from '../StyledComponents/Paragraphs';
 import { StyledLink } from '../StyledComponents/Links';
 import { Button } from '../StyledComponents/Buttons';
 
-const PromptField = () => {
+const PromptField = ({ user, setUser }) => {
   const { setWaiting } = useContext(WaitingContext);
   const { setImage } = useContext(ImageContext);
   const [prompt, setPrompt] = useState('');
@@ -37,7 +37,7 @@ const PromptField = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt, userId: user._id }),
       });
 
       if (!response.ok) {
@@ -46,8 +46,10 @@ const PromptField = () => {
         );
       }
 
-      const result = await response.json();
-      const imageUrl = result.output[0];
+      const data = await response.json();
+      const imageUrl = data.result.output[0];
+      const count = data.count;
+      setUser((prevUser) => ({ ...prevUser, images_generated: count }));
 
       setImage(imageUrl);
     } catch (error) {

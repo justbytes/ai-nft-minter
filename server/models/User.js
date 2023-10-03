@@ -26,6 +26,14 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    images_generated: {
+      type: Number,
+      default: 0,
+    },
+    nfts_minted: {
+      type: Number,
+      default: 0,
+    },
   }
   //   set this to use virtual below
   //   {
@@ -47,6 +55,17 @@ userSchema.pre('save', async function (next) {
 // custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
+};
+
+// custom method to increment the amount of images generated
+userSchema.methods.incrementImageCount = function () {
+  this.images_generated += 1;
+  return this.save();
+};
+
+userSchema.methods.incrementNftCount = function () {
+  this.nfts_minted += 1;
+  return this.save();
 };
 
 // -------- Future development -----------

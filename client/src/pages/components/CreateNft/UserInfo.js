@@ -1,41 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-
-import { useQuery } from '@apollo/client';
-import { USER_INFO } from '../../../utils/queries';
+import React, { useContext } from 'react';
 
 import LoggedInContext from '../../../LoggedInProvider';
 
 import {
   Card,
-  BottomBorderCardBody,
+  BorderedCardBody,
   FlexCardBody,
   CardTitle3,
+  CardTitle4,
 } from '../StyledComponents/Cards';
 import { CenteredParagragh, Paragragh } from '../StyledComponents/Paragraphs';
 import { ButtonLink } from '../StyledComponents/Links';
+import { ActivityBox } from '../StyledComponents/Boxs';
 
-const UserInfo = () => {
-  const [user, setUser] = useState({});
+const UserInfo = ({ user }) => {
   const { loggedIn } = useContext(LoggedInContext);
-  const userDataLength = Object.keys(user).length;
-  const { loading, error, data } = useQuery(USER_INFO);
-
-  useEffect(() => {
-    try {
-      if (loading) {
-        console.log('loading..');
-      }
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        // console.log("get me query:", data.me);
-        setUser(data?.me);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [data, error, loading, userDataLength]);
 
   return !loggedIn ? (
     <Card $secondary $width="27%" $margin="10px" $padding="5px">
@@ -47,20 +26,31 @@ const UserInfo = () => {
   ) : (
     <Card $secondary $width="27%" $margin="10px" $padding="5px">
       <CardTitle3 $padding="10px">Welcome {user?.username}</CardTitle3>
-
-      <BottomBorderCardBody $padding="5px">
-        <Paragragh>
+      <CardTitle4 $color="grey">Account Information</CardTitle4>
+      <BorderedCardBody $padding="5px">
+        <Paragragh $margin="5px 0">
           Name: {user?.firstname} {user?.lastname}
         </Paragragh>
-        <Paragragh>Email: {user?.email}</Paragragh>
-      </BottomBorderCardBody>
-      <FlexCardBody $padding="5px" $margin="10px">
-        <CenteredParagragh>NFTs Minted: #</CenteredParagragh>
-        <CenteredParagragh>Images Generated: #</CenteredParagragh>
-      </FlexCardBody>
-      <FlexCardBody $padding="5px" $margin="10px">
-        <CenteredParagragh>Recent Images</CenteredParagragh>
-      </FlexCardBody>
+        <Paragragh $margin="5px 0">Email: {user?.email}</Paragragh>
+      </BorderedCardBody>
+      <CardTitle4 $color="grey">Wallet</CardTitle4>
+      <BorderedCardBody>
+        <Paragragh>connect wallet button</Paragragh>
+      </BorderedCardBody>
+
+      <CardTitle4 $color="grey">Account Activity</CardTitle4>
+      <BorderedCardBody>
+        <FlexCardBody $padding="5px" $margin="10px">
+          <ActivityBox
+            title="Images Generated"
+            content={user?.images_generated}
+          />
+          <ActivityBox title="Images Minted" content={user?.nfts_minted} />
+        </FlexCardBody>
+        <FlexCardBody $padding="5px" $margin="10px">
+          <CenteredParagragh>Recent Images</CenteredParagragh>
+        </FlexCardBody>
+      </BorderedCardBody>
     </Card>
   );
 };

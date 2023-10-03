@@ -16,7 +16,7 @@ import { StyledLink } from '../StyledComponents/Links';
 import { Input } from '../StyledComponents/Inputs';
 import { Button } from '../StyledComponents/Buttons';
 
-const MetadataField = ({ provider, nftContract }) => {
+const MetadataField = ({ user, setUser, provider, nftContract }) => {
   // Intial values of the metadata fields
   const initialMetadata = {
     name: '',
@@ -80,7 +80,7 @@ const MetadataField = ({ provider, nftContract }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ image, metadata }),
+          body: JSON.stringify({ image, metadata, userId: user._id }),
         });
         if (!response.ok) {
           throw new Error(
@@ -102,8 +102,26 @@ const MetadataField = ({ provider, nftContract }) => {
         const nftWithSigner = await nftContract.connect(nftSigner);
         const tx = await nftWithSigner.mint(nftHash);
         await tx.wait();
+
+        const response = await fetch('/nft-count', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: user._id }),
+        });
+        if (!response.ok) {
+          throw new Error(
+            `There was a problem updating nft count. Request failed with status code ${response.status}`
+          );
+        }
+        const result = await response.json();
+        const count = result.count;
+        setUser((prevUser) => ({ ...prevUser, nfts_minted: count }));
       } catch (error) {
-        console.error(`There was an error minting the NFT. ERROR ${error}`);
+        console.error(
+          `There was an error uploading metadata to ipfs. ERROR ${error}`
+        );
       }
     } catch (error) {
       console.error(
@@ -111,6 +129,7 @@ const MetadataField = ({ provider, nftContract }) => {
       );
     } finally {
       setWaiting(false);
+
       setImage(image);
     }
   };

@@ -1,6 +1,7 @@
 {
   "name": "ai-nft-minter",
   "version": "1.0.0",
+  "type": "module",
   "description": "AI NFT Minter",
   "main": "hardhat.config.js",
   "scripts": {

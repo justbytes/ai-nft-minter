@@ -8,6 +8,8 @@ export const USER_INFO = gql`
       firstname
       lastname
       username
+      images_generated
+      nfts_minted
     }
   }
 `;
