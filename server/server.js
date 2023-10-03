@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 const corsOptions = {
-  origin: 'https://thenftgenie.co/',
+  origin: 'https://thenftgenie.co',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 
