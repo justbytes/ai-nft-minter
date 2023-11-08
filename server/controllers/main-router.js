@@ -74,14 +74,15 @@ router.post('/generate-image', async (req, res) => {
             .catch((error) => console.error('error', error));
         }, delayInMilliseconds);
       } else {
-        const increment = async (id) => {
+        const updateUser = async (id) => {
           const user = await User.findById(id);
-          console.log('user', user);
           await user.incrementImageCount();
-          const img_gen = user.images_generated;
-          return img_gen;
+          await user.addGeneratedImage(image, prompt);
+          const number = user.images_generated;
+          return number;
         };
-        const count = await increment(userId);
+        const image = result.output[0];
+        const count = await updateUser(userId);
         res.json({ result, count });
       }
     })
@@ -152,11 +153,17 @@ router.post('/upload-image', async (req, res) => {
 });
 
 router.post('/nft-count', async (req, res) => {
-  const { userId } = req.body;
+  const { metadata, image, userId } = req.body;
+  console.log(metadata, image);
   try {
     const user = await User.findById(userId);
-    console.log('user', user);
     await user.incrementNftCount();
+    await user.addNft(
+      metadata.name,
+      metadata.description,
+      image,
+      metadata.attributes
+    );
     const count = user.nfts_minted;
     res.json({ count });
   } catch (error) {

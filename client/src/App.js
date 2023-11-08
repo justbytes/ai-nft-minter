@@ -32,13 +32,18 @@ function App() {
       <ApolloProvider client={client}>
         <Router>
           <LoggedInProvider>
-            <Navigation account={account} setAccount={setAccount} />
+            <Navigation />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route
                 path="/createNft"
                 element={
-                  <CreateNft nftContract={nftContract} provider={provider} />
+                  <CreateNft
+                    nftContract={nftContract}
+                    provider={provider}
+                    account={account}
+                    setAccount={setAccount}
+                  />
                 }
               />
               <Route path="/login" element={<Login />} />

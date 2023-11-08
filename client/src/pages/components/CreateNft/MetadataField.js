@@ -102,13 +102,12 @@ const MetadataField = ({ user, setUser, provider, nftContract }) => {
         const nftWithSigner = await nftContract.connect(nftSigner);
         const tx = await nftWithSigner.mint(nftHash);
         await tx.wait();
-
         const response = await fetch('/nft-count', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userId: user._id }),
+          body: JSON.stringify({ metadata, image, userId: user._id }),
         });
         if (!response.ok) {
           throw new Error(
@@ -141,7 +140,7 @@ const MetadataField = ({ user, setUser, provider, nftContract }) => {
       <CenteredParagragh>
         In this section you will name your NFT, give it a description, and add 6
         attributes! If you need some help with this part click{' '}
-        <StyledLink href="https://docs.opensea.io/docs/metadata-standards">
+        <StyledLink link="https://docs.opensea.io/docs/metadata-standards">
           HERE
         </StyledLink>{' '}
         to learn more.
@@ -184,6 +183,7 @@ const MetadataField = ({ user, setUser, provider, nftContract }) => {
         ))}
       </AttributeBody>
       <Button
+        $backgroundColor="orange"
         $width="100%"
         onClick={handleMetadataClick}
         className="btn mint-btn"

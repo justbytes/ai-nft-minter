@@ -49,7 +49,10 @@ const PromptField = ({ user, setUser }) => {
       const data = await response.json();
       const imageUrl = data.result.output[0];
       const count = data.count;
-      setUser((prevUser) => ({ ...prevUser, images_generated: count }));
+      setUser((prevUser) => ({
+        ...prevUser,
+        images_generated: count,
+      }));
 
       setImage(imageUrl);
     } catch (error) {
@@ -65,12 +68,13 @@ const PromptField = ({ user, setUser }) => {
       <BigInput rows="3" onChange={handlePromptChange} />
       <CenteredParagragh>
         What makes a good{' '}
-        <StyledLink href="https://stable-diffusion-art.com/prompt-guide/">
+        <StyledLink link="https://stable-diffusion-art.com/prompt-guide/">
           PROMPT
         </StyledLink>
         ?
       </CenteredParagragh>
       <Button
+        $backgroundColor="orange"
         $width="100%"
         className="btn generate-btn"
         onClick={handleImageGenerationClick}

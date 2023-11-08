@@ -18,7 +18,13 @@ const Results = () => {
   const { metadataHash } = useContext(MetadataHashContext);
   // TODO: Change this to a switch case
   return (
-    <Card $width="30%" $margin="10px" $padding="5px">
+    <Card
+      $width="30%"
+      $margin="10px"
+      $padding="5px"
+      $overflow
+      $maxHeight="100vh"
+    >
       {!waiting && image ? (
         <Figure>
           <StyledImage width="100%" src={image} alt="AI Generated" />

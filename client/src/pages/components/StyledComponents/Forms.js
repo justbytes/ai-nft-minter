@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 export const Form = styled.form`
   width: ${(props) => props.$width};
-  height: ${(props) => props.$height};
+  max-height: ${(props) => props.$maxHeight};
   padding: ${(props) => props.$padding};
   margin: ${(props) => props.$margin};
+  overflow: ${(props) => (props.$overflow ? 'auto' : null)};
   border: 1px solid black;
   border-radius: 5px;
 `;

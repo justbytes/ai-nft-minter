@@ -14,14 +14,14 @@ const app = express();
 const PORT = process.env.PORT;
 
 const corsOptions = {
-  origin: 'https://thenftgenie.co',
+  origin: 'http://localhost:3001',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(router);
 
 app.get('*', (req, res) => {
@@ -34,12 +34,13 @@ const startApolloServer = async () => {
     typeDefs,
     resolvers,
     context: authMiddleware,
+    playground: true,
   });
 
   await server.start();
 
   // Connect Apollo Server to the Express app
-  server.applyMiddleware({ app, path: '/graphql' });
+  server.applyMiddleware({ app });
 
   if (process.env.ENV === 'production') {
     const sslOptions = {

@@ -8,6 +8,8 @@ export const Card = styled.div`
   background-color: ${(props) => (props.$secondary ? '#FFFFFF' : '#E5E5E5')};
   width: ${(props) => props.$width};
   min-height: ${(props) => props.$height};
+  max-height: ${(props) => props.$maxHeight};
+  overflow: ${(props) => (props.$overflow ? 'auto' : null)};
   margin: ${(props) => props.$margin};
   padding: ${(props) => props.$padding};
   border: 1px solid black;
@@ -28,6 +30,18 @@ export const FlexCard = styled.div`
   border-radius: 5px;
 `;
 
+export const CustomCard = styled.div`
+  border: ${(props) => (props.$border ? `1px solid black` : '0px')};
+  border-radius: ${(props) => props.$borderRadius};
+  display: ${(props) => (props.$flex ? 'flex' : null)};
+  flex-direction: ${(props) => props.$flexDirection};
+  justify-content: ${(props) => props.$justifyContent};
+  width: ${(props) => props.$width};
+  min-height: ${(props) => props.$height};
+  margin: ${(props) => props.$margin};
+  padding: ${(props) => props.$padding};
+`;
+
 const Body = ({ className, children }) => (
   <div className={className}>{children}</div>
 );
@@ -40,6 +54,7 @@ export const CardBody = styled(Body)`
 export const BorderedCardBody = styled(Body)`
   border: 1px solid #80808052;
   border-radius: 3px;
+  width: ${(props) => props.$width};
   padding: ${(props) => props.$padding};
   margin: ${(props) => props.$margin};
   display: flex;
@@ -95,6 +110,6 @@ export const CardTitle4 = styled.h4`
 
 export const CardTitle6 = styled.h6`
   text-align: center;
-  border-bottom: 1px solid black;
+  border-bottom: ${(props) => (props.$border ? '1px solid black' : 'null')};
   padding: ${(props) => props.$padding};
 `;

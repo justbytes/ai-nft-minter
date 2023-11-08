@@ -17,7 +17,7 @@ const Instructions = () => {
         <Paragragh>
           2. Configure your MetaMask wallet to use the Goerli Testnet and get
           WETH from a{' '}
-          <StyledLink href="https://goerlifaucet.com/">faucet</StyledLink>{' '}
+          <StyledLink link="https://goerlifaucet.com/">faucet</StyledLink>{' '}
         </Paragragh>
 
         <Paragragh>
@@ -27,7 +27,7 @@ const Instructions = () => {
         <Paragragh>
           4. Enter a prompt in the prompt field until you get a image you like.
           Read{' '}
-          <StyledLink href="https://stable-diffusion-art.com/prompt-guide/">
+          <StyledLink link="https://stable-diffusion-art.com/prompt-guide/">
             HERE
           </StyledLink>{' '}
           if you want to know what makes a good prompt.
@@ -41,7 +41,7 @@ const Instructions = () => {
           you to sign the transaction.
         </Paragragh>
         <Paragragh>
-          7. Go to <StyledLink href="https://opensea.io/">OpenSea</StyledLink> ,
+          7. Go to <StyledLink link="https://opensea.io/">OpenSea</StyledLink> ,
           connect your MetaMask wallet, navigate to your profile and you will be
           able to view your NFT!
         </Paragragh>

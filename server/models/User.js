@@ -1,47 +1,44 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const userSchema = new Schema(
-  {
-    firstname: {
-      type: String,
-      required: true,
-    },
-    lastname: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/.+@.+\..+/, 'Must use a valid email address'],
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    images_generated: {
-      type: Number,
-      default: 0,
-    },
-    nfts_minted: {
-      type: Number,
-      default: 0,
-    },
-  }
-  //   set this to use virtual below
-  //   {
-  //     toJSON: {
-  //       virtuals: true,
-  //     },
-  //   }
-);
+const generatedImageSchema = require('./GeneratedImage');
+const nftSchema = require('./Nft');
+
+const userSchema = new Schema({
+  firstname: {
+    type: String,
+    required: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/.+@.+\..+/, 'Must use a valid email address'],
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  images_generated: {
+    type: Number,
+    default: 0,
+  },
+  nfts_minted: {
+    type: Number,
+    default: 0,
+  },
+  image_archive: [generatedImageSchema],
+  nft_archive: [nftSchema],
+});
 
 // hash user password
 userSchema.pre('save', async function (next) {
@@ -67,12 +64,16 @@ userSchema.methods.incrementNftCount = function () {
   this.nfts_minted += 1;
   return this.save();
 };
-
-// -------- Future development -----------
-// when we query a user, we'll also get another field called `nftCount` with the number of saved/created nfts they have
-// userSchema.virtual('bookCount').get(function () {
-//   return this.savedBooks.length;
-// });
+// Add image to archive
+userSchema.methods.addGeneratedImage = function (image, prompt) {
+  this.image_archive.push({ image, prompt });
+  return this.save();
+};
+// Add NFT to archive
+userSchema.methods.addNft = function (name, description, image, attributes) {
+  this.nft_archive.push({ name, description, image, attributes });
+  return this.save();
+};
 
 const User = model('User', userSchema);
 

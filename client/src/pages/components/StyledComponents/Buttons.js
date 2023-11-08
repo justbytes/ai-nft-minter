@@ -2,9 +2,17 @@ import styled from 'styled-components';
 
 export const Button = styled.button`
   border: 1px solid black;
+  background-color: ${(props) => props.$backgroundColor};
   border-radius: 5px;
   width: ${(props) => props.$width};
   padding: ${(props) => props.$padding};
+  &:hover {
+    border: 1px solid black;
+    background-color: ${(props) => props.$backgroundColor};
+    border-radius: 5px;
+    width: ${(props) => props.$width};
+    padding: ${(props) => props.$padding};
+  }
 `;
 
 export const BorderlessButton = styled.button`

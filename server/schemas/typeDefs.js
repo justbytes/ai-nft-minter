@@ -9,6 +9,25 @@ const typeDefs = gql`
     email: String!
     images_generated: Int
     nfts_minted: Int
+    image_archive: [GeneratedImage]
+    nft_archive: [Nft]
+  }
+
+  type GeneratedImage {
+    image: String!
+    prompt: String!
+  }
+
+  type Nft {
+    name: String!
+    description: String
+    image: String!
+    attributes: [NftAttribute]
+  }
+
+  type NftAttribute {
+    trait: String
+    value: String
   }
 
   type Auth {

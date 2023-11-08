@@ -18,7 +18,7 @@ import { WaitingProvider } from './components/CreateNft/ContentProviders/Waiting
 import { ImageProvider } from './components/CreateNft/ContentProviders/ImageProvider';
 import { MetadataHashProvider } from './components/CreateNft/ContentProviders/MetadataProvider';
 
-export function CreateNft({ provider, nftContract }) {
+export function CreateNft({ provider, nftContract, account, setAccount }) {
   const [user, setUser] = useState({});
   const userDataLength = Object.keys(user).length;
   const { loading, error, data } = useQuery(USER_INFO);
@@ -45,7 +45,13 @@ export function CreateNft({ provider, nftContract }) {
       <ImageProvider>
         <MetadataHashProvider>
           <FlexSection>
-            <Form $width="40%" $margin="10px" $padding="5px">
+            <Form
+              $width="40%"
+              $margin="10px"
+              $padding="5px"
+              $overflow
+              $maxHeight="100vh"
+            >
               <PromptField user={user} setUser={setUser} />
               <MetadataField
                 user={user}
@@ -55,7 +61,7 @@ export function CreateNft({ provider, nftContract }) {
               />
             </Form>
             <Results />
-            <UserInfo user={user} />
+            <UserInfo user={user} account={account} setAccount={setAccount} />
           </FlexSection>
         </MetadataHashProvider>
       </ImageProvider>

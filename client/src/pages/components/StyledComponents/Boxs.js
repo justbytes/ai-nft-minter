@@ -10,6 +10,13 @@ const Box = styled.div`
   margin: ${(props) => props.$margin};
 `;
 
+const ImageBox = styled.div`
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: ${(props) => props.$padding};
+  margin: 3px;
+`;
+
 const BoxTitle = styled.div`
   background-color: ${(props) => props.$bgColor};
   width: ${(props) => props.$width};
@@ -42,7 +49,7 @@ const Image = ({ className, width, height, alt, src }) => {
 };
 
 export const StyledImage = styled(Image)`
-  border-radius: 5px;
+  border-radius: 2px;
 `;
 
 export const ActivityBox = ({ title, content }) => {
@@ -62,15 +69,29 @@ export const ActivityBox = ({ title, content }) => {
   );
 };
 
-export const RecentImageBox = ({ link }) => {
+export const RecentImageBox = ({ link, content }) => {
   return (
-    <Box>
+    <ImageBox>
       <StyledImage
-        with="100px"
-        height="100px"
+        width="90px"
+        height="90px"
         alt="recent generated image"
         src={link}
       />
-    </Box>
+    </ImageBox>
   );
 };
+
+export const Scrollable = styled.div`
+  border: ${(props) => (props.$border ? `1px solid black` : '0px')};
+  border-radius: ${(props) => props.$borderRadius};
+  display: ${(props) => (props.$flex ? 'flex' : null)};
+  flex-direction: ${(props) => props.$flexDirection};
+  flex-wrap: ${(props) => props.$flexWrap};
+  justify-content: ${(props) => props.$justifyContent};
+  width: ${(props) => props.$width};
+  max-height: ${(props) => props.$height};
+  margin: ${(props) => props.$margin};
+  padding: ${(props) => props.$padding};
+  overflow: auto;
+`;
